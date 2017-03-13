@@ -1,6 +1,14 @@
-<article>
-    <h5>{{course.name}} {{course.duration}} {{course.date}}</h5>
-    <p>{{course.description}}</p>
-    <button>Edit Course</button>
-    <button (click)="deleteCourse()">Delete</button>
+<article class="course centered-container">
+    <div class="course-info">
+        <div class="course-header">
+            <h3>{{course.name}}</h3>
+            <span class="course-duration">{{course.duration}}</span>
+            <span class="course-start-date">{{course.date | date}}</span>
+        </div>
+        <p>{{course.description}}</p>
+    </div>
+    <div class="course-buttons">
+        <button>Edit</button>
+        <button (click)="deleteCourse()">Delete</button>
+    </div>
 </article>

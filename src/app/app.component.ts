@@ -20,7 +20,9 @@ import { AppState } from './app.service';
   ],
   template: `
   <header-component></header-component>
-  <courses></courses>
+  <main>
+    <courses></courses>
+  </main>
   <footer-component></footer-component>`
 })
 export class AppComponent implements OnInit {

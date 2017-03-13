@@ -1,0 +1,15 @@
+.site-header {                     
+            justify-content: space-between;        
+            padding: 10px;
+        }
+        
+.site-name {
+            display: flex;
+            align-items: center;
+            
+        }
+.user-toolbar {
+            display: flex;
+            flex-flow: column;
+            
+        }

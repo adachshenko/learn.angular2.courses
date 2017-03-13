@@ -10,6 +10,7 @@ import {
     OnInit,
     SimpleChange
 } from '@angular/core';
+import { ICourse } from '../shared/course.model';
 
 @Component({
     selector: 'course-list',
@@ -17,6 +18,8 @@ import {
     styleUrls: ['./course-list.component.css']
 
 })
+
+
 
 export class CourseListComponent implements
     OnChanges, OnInit, DoCheck,
@@ -34,30 +37,15 @@ export class CourseListComponent implements
         console.log($event);
     }
     ngOnInit() {
-        this.courses = [{
-            id: 1,
-            name: 'Learn HTML & CSS',
-            duration: 120,
-            date: 121,
-            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
-
-        },
-        {
-            id: 2,
-            name: 'Learn JavaScript Basics',
-            duration: 120,
-            date: 121,
-            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
-
-        },
-        {
-            id: 3,
-            name: 'Learn Angular 2',
-            duration: 120,
-            date: 121,
-            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
-
-        }];
+        this.courses = [
+           new Course (2, 'Learn JavaScript Basics', 120, new Date(), 
+           'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'),
+    
+        new Course (3, 'Learn JavaScript Basics', 120, new Date(), 
+           'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'),
+           
+           new Course (3, 'Learn JavaScript Basics', 120, new Date(), 
+           'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj')];
         console.log('OnInit!');
     }
 
@@ -74,6 +62,16 @@ export class CourseListComponent implements
     ngAfterViewChecked() { console.log('AfterViewChecked'); }
 
     ngOnDestroy() { console.log('OnDestroy'); }
+
+    
+}
+
+class Course implements ICourse {
+
+    constructor(public id: number, public name: string, public duration: number,
+                public date: Date, public description: string) {
+
+    }
 }
 
 
