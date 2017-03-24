@@ -1,77 +1,33 @@
 import {
     Component,
-    AfterContentChecked,
-    AfterContentInit,
-    AfterViewChecked,
-    AfterViewInit,
-    DoCheck,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    SimpleChange
+    OnInit
 } from '@angular/core';
+
 import { ICourse } from '../shared/course.model';
+import { CourseService } from '../shared/course.service';
 
 @Component({
     selector: 'course-list',
     templateUrl: './course-list.component.html',
-    styleUrls: ['./course-list.component.css']
+    styleUrls: ['./course-list.component.css'],
+    providers: [CourseService]
 
 })
 
-
-
 export class CourseListComponent implements
-    OnChanges, OnInit, DoCheck,
-    AfterContentInit, AfterContentChecked,
-    AfterViewInit, AfterViewChecked,
-    OnDestroy {
+    OnInit {
 
-    public courses;
+    private courses;
 
-    constructor() {
-        this.courses = [];
+    constructor(private courseService: CourseService) {
     }
 
-    printId($event) {
+    public ngOnInit(): void {
+        this.courses = this.courseService.getCourseList();
+    }
+
+    public printId($event): void {
         console.log($event);
     }
-    ngOnInit() {
-        this.courses = [
-           new Course (2, 'Learn JavaScript Basics', 120, new Date(), 
-           'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'),
-    
-        new Course (3, 'Learn JavaScript Basics', 120, new Date(), 
-           'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'),
-           
-           new Course (3, 'Learn JavaScript Basics', 120, new Date(), 
-           'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj')];
-        console.log('OnInit!');
-    }
 
-    ngOnChanges() { console.log('OnChanges!'); }
-
-    ngDoCheck() { console.log('DoCheck!'); }
-
-    ngAfterContentInit() { console.log('AfterContentInit!'); }
-
-    ngAfterContentChecked() { console.log('AfterContentChecked'); }
-
-    ngAfterViewInit() { console.log('AfterViewInit'); }
-
-    ngAfterViewChecked() { console.log('AfterViewChecked'); }
-
-    ngOnDestroy() { console.log('OnDestroy'); }
-
-    
 }
-
-class Course implements ICourse {
-
-    constructor(public id: number, public name: string, public duration: number,
-                public date: Date, public description: string) {
-
-    }
-}
-
-
