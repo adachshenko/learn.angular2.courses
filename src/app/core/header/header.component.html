@@ -4,9 +4,12 @@
             <img src="./assets/img/logo.jpg" alt="Bird - Scientist">
             <h1>Bird - Scientist</h1>
         </div>
-        <div class="user-toolbar">
-            <span class="user-name">adachshenko</span>
-            <a href="/users/sign_out">log off</a>
+        <div class="user-toolbar" *ngIf="authorizationService.isAuthenticated()">
+            <span class="user-name">{{authorizationService.getUserInfo()}}</span>
+            <a href="" (click)='logout($event)' >log off</a>
+        </div>
+    <div class="user-toolbar" *ngIf="!authorizationService.isAuthenticated()">
+            <a [routerLink]=" ['./login'] ">log in</a>
         </div>
     </div>
 </header>

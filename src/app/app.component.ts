@@ -21,7 +21,7 @@ import { AppState } from './app.service';
   template: `
   <header-component></header-component>
   <main>
-    <courses-component></courses-component>
+    <router-outlet></router-outlet>
   </main>
   <footer-component></footer-component>`
 })

@@ -3,14 +3,12 @@ import {
     OnInit
 } from '@angular/core';
 
-import { ICourse } from '../shared/course.model';
-import { CourseService } from '../shared/course.service';
+import { ICourse, CourseService } from '../shared';
 
 @Component({
     selector: 'course-list',
     templateUrl: './course-list.component.html',
-    styleUrls: ['./course-list.component.css'],
-    providers: [CourseService]
+    styleUrls: ['./course-list.component.css']
 
 })
 
@@ -26,8 +24,11 @@ export class CourseListComponent implements
         this.courses = this.courseService.getCourseList();
     }
 
-    public printId($event): void {
-        console.log($event);
+    public removeCourse(courseId): void {
+        if (confirm('Do you really want to delete this course?')) {
+            if (this.courseService.deleteCourseById(courseId)) {
+                this.courses = this.courseService.getCourseList();
+            }
+        }
     }
-
 }

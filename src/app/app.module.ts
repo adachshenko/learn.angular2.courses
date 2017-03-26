@@ -24,14 +24,10 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
-import { FooterComponent } from './core/footer/footer.component';
-import { HeaderComponent } from './core/header/header.component';
-import { ToolboxComponent } from './courses/course-list/toolbox/toolbox.component';
-import { CoursesComponent } from './courses/courses.component';
-import { CourseListComponent } from './courses/course-list/course-list.component';
-import { CourseListItemComponent } from
-  './courses/course-list/course-list-item/course-list-item.component';
-
+import { CoursesModule } from './courses/courses.module';
+import { CoreModule } from './core/core.module';
+import { LoginPageComponent } from './login-page';
+import { NoContentComponent } from './no-content';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -51,14 +47,12 @@ type StoreType = {
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    ToolboxComponent,
-    CoursesComponent,
-    CourseListComponent,
-    CourseListItemComponent
+    LoginPageComponent,
+    NoContentComponent
   ],
   imports: [ // import Angular's modules
+    CoursesModule,
+    CoreModule,
     BrowserModule,
     FormsModule,
     HttpModule,
