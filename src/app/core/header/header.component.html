@@ -6,9 +6,9 @@
         </div>
         <div class="user-toolbar" *ngIf="authorizationService.isAuthenticated()">
             <span class="user-name">{{authorizationService.getUserInfo()}}</span>
-            <a href="" (click)='logout($event)' >log off</a>
+            <a href="" (click)='logout($event)'>log off</a>
         </div>
-    <div class="user-toolbar" *ngIf="!authorizationService.isAuthenticated()">
+        <div class="user-toolbar" *ngIf="!authorizationService.isAuthenticated()">
             <a [routerLink]=" ['./login'] ">log in</a>
         </div>
     </div>

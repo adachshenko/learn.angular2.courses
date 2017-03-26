@@ -12,8 +12,7 @@ import { ICourse, CourseService } from '../shared';
 
 })
 
-export class CourseListComponent implements
-    OnInit {
+export class CourseListComponent implements OnInit {
 
     private courses;
 
@@ -21,14 +20,18 @@ export class CourseListComponent implements
     }
 
     public ngOnInit(): void {
-        this.courses = this.courseService.getCourseList();
+        this.updateCourseList();
     }
 
     public removeCourse(courseId): void {
         if (confirm('Do you really want to delete this course?')) {
             if (this.courseService.deleteCourseById(courseId)) {
-                this.courses = this.courseService.getCourseList();
+                this.updateCourseList();
             }
         }
+    }
+
+    private updateCourseList() {
+        this.courses = this.courseService.getCourseList();
     }
 }

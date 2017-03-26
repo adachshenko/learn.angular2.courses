@@ -26,8 +26,8 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { CoursesModule } from './courses/courses.module';
 import { CoreModule } from './core/core.module';
-import { LoginPageComponent } from './login-page';
 import { NoContentComponent } from './no-content';
+import { LoginPageModule } from './login-page';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -47,12 +47,12 @@ type StoreType = {
   bootstrap: [AppComponent],
   declarations: [
     AppComponent,
-    LoginPageComponent,
     NoContentComponent
   ],
   imports: [ // import Angular's modules
     CoursesModule,
     CoreModule,
+    LoginPageModule,
     BrowserModule,
     FormsModule,
     HttpModule,
