@@ -1,5 +1,6 @@
 {
-  
-"typescript.tsdk": "node_modules/typescript/lib/",
-"vsicons.presets.angular": true
+
+    "typescript.tsdk": "node_modules/typescript/lib/",
+    "vsicons.presets.angular": true,
+    "editor.fontSize": 18
 }

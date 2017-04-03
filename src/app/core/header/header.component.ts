@@ -24,13 +24,13 @@ export class HeaderComponent implements OnDestroy {
     private userInfoSubscription: Subscription;
 
     constructor(public authorizationService: AuthorizationService,
-        private router: Router,
-        private changeDetectionRef: ChangeDetectorRef) {
+                private router: Router,
+                private changeDetectionRef: ChangeDetectorRef) {
         this.userInfoSubscription =
             this.authorizationService.getUserInfo().subscribe((userInfo) => {
                 this.userInfo = userInfo;
                 this.changeDetectionRef.markForCheck();
-            })
+            });
     }
 
     public logout(event: Event) {

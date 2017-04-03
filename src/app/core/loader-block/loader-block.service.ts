@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/share';
 
 @Injectable()
 export class LoaderBlockService {
 
-    
-    public show(): void {
+    public active: Subject<boolean> = new Subject();
 
+    public show(): void {
+        return this.active.next(true);
     }
 
     public hide(): void {
-
+        return this.active.next(false);
     }
 }

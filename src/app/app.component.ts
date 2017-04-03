@@ -21,8 +21,9 @@ import { AppState } from './app.service';
   template: `
   <header-component></header-component>
   <main>
-    <router-outlet></router-outlet>
-  </main>
+  <loader-block></loader-block>
+    <router-outlet></router-outlet>       
+  </main>     
   <footer-component></footer-component>`
 })
 export class AppComponent {

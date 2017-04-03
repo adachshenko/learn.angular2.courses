@@ -25,13 +25,17 @@ export class CourseListComponent implements OnInit {
 
     public removeCourse(courseId): void {
         if (confirm('Do you really want to delete this course?')) {
-            if (this.courseService.deleteCourseById(courseId)) {
+            /*if (this.courseService.deleteCourseById(courseId)) {
                 this.updateCourseList();
-            }
+            }*/
+            this.courseService.deleteCourseById().subscribe((courses) => {
+                this.courses.filter((course) => course.id !== courseId)
+            });
         }
     }
 
     private updateCourseList() {
-        this.courses = this.courseService.getCourseList();
+       // this.courses = this.courseService.getCourseList();
+       this.courseService.getCourseList().subscribe((courses) => this.courses = courses);
     }
 }

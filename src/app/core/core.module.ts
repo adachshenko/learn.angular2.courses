@@ -5,18 +5,23 @@ import { RouterModule } from '@angular/router';
 
 import { FooterComponent } from './footer';
 import { HeaderComponent } from './header';
+import { LoaderBlockComponent } from './loader-block';
 import { AuthorizationService } from './authorization.service';
+import { LoaderBlockService } from './loader-block';
 
 @NgModule({
     declarations: [
         FooterComponent,
-        HeaderComponent
+        HeaderComponent,
+        LoaderBlockComponent
     ],
     exports: [
         FooterComponent,
-        HeaderComponent],
+        HeaderComponent,
+        LoaderBlockComponent],
     providers: [
-        AuthorizationService
+        AuthorizationService,
+        LoaderBlockService
     ],
     imports: [
         FormsModule,
