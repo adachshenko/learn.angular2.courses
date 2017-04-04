@@ -58,7 +58,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
               console.log(`Error during course with id ${id} remove`);
             }
           });
-      };
+      }
   }
 
    public ngOnDestroy(): void {

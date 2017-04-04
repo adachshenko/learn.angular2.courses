@@ -17,7 +17,6 @@ export class AuthorizationService {
     };
 
     public login(login: string, password: string): Observable<boolean> {
-        //this.loaderBlockService.show();
         let res = new Subject();
         setTimeout(() => {
             let currentUser = {
@@ -28,8 +27,6 @@ export class AuthorizationService {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser));
             this.userInfo.next(currentUser);
             console.log(`${this.userInfo.getValue().userName} log in!`);
-            res.next(true);
-            //this.loaderBlockService.hide();
         }, 1000);
         return res.asObservable();
     }
