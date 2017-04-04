@@ -2,14 +2,16 @@ import {
     Component,
     Input,
     Output,
-    EventEmitter
+    EventEmitter,
+    ChangeDetectionStrategy
 } from '@angular/core';
 import { ICourse } from '../../shared';
 
 @Component({
     selector: 'course-list-item',
     templateUrl: './course-list-item.component.html',
-    styleUrls: ['./course-list-item.component.css']
+    styleUrls: ['./course-list-item.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 

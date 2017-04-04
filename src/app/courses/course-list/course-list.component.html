@@ -1,6 +1,4 @@
-<section *ngFor = "let course of courses">
-    <course-list-item    
-        [course] = "course"
-        (delete)="removeCourse($event)">
+<section *ngFor="let course of courseService.courseList | async">
+    <course-list-item [course]="course" (delete)="removeCourse($event)">
     </course-list-item>
 </section>

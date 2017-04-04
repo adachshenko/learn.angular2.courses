@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import {
+    Component,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef
+} from '@angular/core';
 import { AuthorizationService } from '../core/authorization.service';
+import { LoaderBlockService } from '../core/loader-block';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'login-page',
     templateUrl: './login-page.component.html',
-    styleUrls: ['./login-page.component.css']
+    styleUrls: ['./login-page.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 
@@ -15,11 +21,20 @@ export class LoginPageComponent {
     public userPassword: string;
 
     constructor(private authorizationService: AuthorizationService,
+                private loaderBlockService: LoaderBlockService,
+                private changeDetectorRef: ChangeDetectorRef,
                 private router: Router) { }
 
     public login(): void {
-        if (this.authorizationService.login(this.userLogin, this.userPassword)) {
-            this.router.navigate(['/courses']);
-        }
+        this.loaderBlockService.show();
+        this.authorizationService.login(this.userLogin, this.userPassword)
+            .subscribe((result) => {
+                if (result) {
+                    this.router.navigate(['/courses']);
+                } else {
+                    this.changeDetectorRef.markForCheck();
+                }
+                this.loaderBlockService.hide();
+            });
     }
 }

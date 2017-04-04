@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 import { LoaderBlockService } from './loader-block';
 
@@ -15,8 +16,9 @@ export class AuthorizationService {
         this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
     };
 
-    public login(login: string, password: string): boolean {
-        this.loaderBlockService.show();
+    public login(login: string, password: string): Observable<boolean> {
+        //this.loaderBlockService.show();
+        let res = new Subject();
         setTimeout(() => {
             let currentUser = {
                 id: 1,
@@ -26,16 +28,19 @@ export class AuthorizationService {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser));
             this.userInfo.next(currentUser);
             console.log(`${this.userInfo.getValue().userName} log in!`);
-            this.loaderBlockService.hide();
+            res.next(true);
+            //this.loaderBlockService.hide();
         }, 1000);
-        return true;
+        return res.asObservable();
     }
 
-    public logout(): boolean {
+    public logout(): Observable<boolean> {
+        let res = new Subject();
         console.log(`${this.userInfo.getValue().userName} log out!`);
         localStorage.removeItem(LOCAL_STORAGE_KEY);
         this.userInfo.next(null);
-        return true;
+        res.next(true);
+        return res.asObservable();
     }
 
     public isAuthenticated(): boolean {

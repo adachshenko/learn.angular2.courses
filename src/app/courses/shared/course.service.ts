@@ -3,13 +3,14 @@ import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 
 import { ICourse } from './';
-import { LoaderBlockService } from '../../core/loader-block';
 
 @Injectable()
 export class CourseService {
 
-    private courseList: Subject<ICourse[]>;
-    private courses: ICourse[] = [
+    public courseList: Observable<ICourse[]>;
+    private courseListSubject: Subject<ICourse[]> = new Subject();
+
+    private _courseList: ICourse[] = [
         {
             id: 1, name: 'Learn JavaScript Basics', duration: 120, startDate: new Date(),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
@@ -25,38 +26,35 @@ export class CourseService {
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
         }];
 
-    constructor(private loaderBlockService: LoaderBlockService) {
-       
+    constructor() {
+        this.courseList = this.courseListSubject.asObservable();
     };
 
-    public getCourseList(): void {
-         return this.courseList.next(this.courses);
-    }
-
-    public getCourseById(courseId: number): ICourse {
-        return this.courses.find((course: ICourse) => course.id === courseId);
-    }
-
-    /*public deleteCourseById(courseId: number): boolean {
-        this.loaderBlockService.show();
+    public getCourseList(): Observable<boolean> {
+        let res = new Subject();
         setTimeout(() => {
-            this.courseList.next(this.courseList.getValue().filter((course) => course.id !== courseId));
-            this.loaderBlockService.hide();
+            this.courseListSubject.next(this._courseList);
+            res.next(true);
         }, 2000);
-        return true;
-    }*/
-    public deleteCourseById(courseId: number) {
-           // return this.courseList.next(this.courseList.filter((course) => course.id !== courseId));
-           let subject = new Subject();
-           setTimeout();
-           return subject.asObservable();
+        return res.asObservable();
     }
 
-    public createCourse(course: ICourse): boolean {
-        return false;
+    public deleteCourseById(courseId: number): Observable<boolean> {
+        let res = new Subject();
+        setTimeout(() => {
+            this._courseList = this._courseList.filter((course: ICourse) => courseId !== course.id);
+            res.next(true);
+        }, 2000);
+        return res.asObservable();
     }
 
-    public updateCourse(course: ICourse): boolean {
-        return false;
+    public createCourse(course: ICourse): Observable<boolean> {
+        let res = new Subject();
+        return res.asObservable();
+    }
+
+    public updateCourse(course: ICourse): Observable<boolean> {
+        let res = new Subject();
+        return res.asObservable();
     }
 }
