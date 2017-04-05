@@ -37,25 +37,15 @@ export class CourseListComponent implements OnInit, OnDestroy {
         this.updateCourseList();
     }
 
-   /* public removeCourse(courseId): void {
-        if (confirm('Do you really want to delete this course?')) {
-            /*if (this.courseService.deleteCourseById(courseId)) {
-                this.updateCourseList();
-            }*/
-            /*this.courseService.deleteCourseById().subscribe((courses) => {
-                this.courses.filter((course) => course.id !== courseId)
-            });
-        }
-    }*/
-      public removeCourse(id: number): void {
+      public removeCourse(courseId: number): void {
     if (confirm('Do you really want to delete this course?')) {
         this.loaderBlockService.show();
-        this.courseService.deleteCourseById(id)
+        this.courseService.deleteCourseById(courseId)
           .subscribe((removeResult) => {
             if (removeResult) {
               this.updateCourseList();
             } else {
-              console.log(`Error during course with id ${id} remove`);
+              console.log(`Error during course with id ${courseId} remove`);
             }
           });
       }
