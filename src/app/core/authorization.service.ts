@@ -26,6 +26,7 @@ export class AuthorizationService {
             };
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser));
             this.userInfo.next(currentUser);
+            res.next(true);
             console.log(`${this.userInfo.getValue().userName} log in!`);
         }, 1000);
         return res.asObservable();
