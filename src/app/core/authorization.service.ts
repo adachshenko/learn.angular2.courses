@@ -3,8 +3,6 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 
-import { LoaderBlockService } from './loader-block';
-
 const LOCAL_STORAGE_KEY = 'currentUser';
 
 @Injectable()
@@ -12,7 +10,7 @@ export class AuthorizationService {
 
     private userInfo: BehaviorSubject<any>;
 
-    constructor(private loaderBlockService: LoaderBlockService) {
+    constructor() {
         this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
     };
 
