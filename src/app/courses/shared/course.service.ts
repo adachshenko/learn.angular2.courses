@@ -12,18 +12,21 @@ export class CourseService {
 
     private _courseList: ICourse[] = [
         {
-            id: 1, name: 'Learn JavaScript Basics', duration: 120, startDate: new Date(),
-            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
+            id: 1, name: 'Learn JavaScript Basics', duration: 120, startDate: new Date(2017, 5, 22),
+            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
+            topRated: true
         },
 
         {
-            id: 2, name: 'HTML & CSS', duration: 120, startDate: new Date(),
-            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
+            id: 2, name: 'HTML & CSS', duration: 120, startDate: new Date(2017, 0, 17),
+            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
+            topRated: false
         },
 
         {
-            id: 3, name: 'Angular 2', duration: 120, startDate: new Date(),
-            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj'
+            id: 3, name: 'Angular 2', duration: 120, startDate: new Date(2017, 3, 1),
+            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
+            topRated: true
         }];
 
     constructor() {
@@ -32,10 +35,8 @@ export class CourseService {
 
     public getCourseList(): Observable<boolean> {
         let res = new Subject();
-        setTimeout(() => {
             this.courseListSubject.next(this._courseList);
             res.next(true);
-        }, 2000);
         return res.asObservable();
     }
 
