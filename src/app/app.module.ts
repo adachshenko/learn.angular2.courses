@@ -28,6 +28,7 @@ import { CoursesModule } from './courses/courses.module';
 import { CoreModule } from './core/core.module';
 import { NoContentComponent } from './no-content';
 import { LoginPageModule } from './login-page';
+import { SharedModule } from './shared/shared.module';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -53,6 +54,7 @@ type StoreType = {
     CoursesModule,
     CoreModule,
     LoginPageModule,
+    SharedModule,
     BrowserModule,
     FormsModule,
     HttpModule,

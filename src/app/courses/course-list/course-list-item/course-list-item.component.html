@@ -1,4 +1,5 @@
-<article [ngClass]="{'top-rated': course.topRated}" class="course centered-container">
+<article [ngClass]="{'top-rated': course.topRated}" class="course centered-container" 
+[borderHighlighter] = "course.startDate">
     <div class="course-info">
         <div class="course-header">
             <h3>{{course.name}}</h3>
