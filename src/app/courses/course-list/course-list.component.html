@@ -1,8 +1,9 @@
+<toolbox-component (find)="findCourses($event)"></toolbox-component>
 <section>
     <div class="centered-container" *ngIf="courseList.length === 0">
         <span>No data. Feel free to add new course.</span>
     </div>
-    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList">
+    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList 
+    | myOrderBy: 'startDate'">
     </course-list-item>
-
 </section>

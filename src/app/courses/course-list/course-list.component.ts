@@ -11,22 +11,27 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ICourse, CourseService } from '../shared';
 import { LoaderBlockService } from '../../core/loader-block';
+import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
 
 @Component({
   selector: 'course-list',
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.css'],
+  providers: [FilterByPipe],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class CourseListComponent implements OnInit, OnDestroy {
 
   public courseList: ICourse[] = [];
+  public filteredCourseList: ICourse[] = [];
+
   private courseListSubscriptionList: Subscription = new Subscription();
 
   constructor(private courseService: CourseService,
-              private loaderBlockService: LoaderBlockService,
-              private changeDetectorRef: ChangeDetectorRef) {
+    private loaderBlockService: LoaderBlockService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private filterByPipe: FilterByPipe) {
     this.courseListSubscriptionList = courseService.courseList
       .subscribe((_courseList) => {
         this.courseList = _courseList;
@@ -51,6 +56,12 @@ export class CourseListComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  public findCourses(filter: string) {
+    this.updateCourseList();
+    this.courseList = this.filterByPipe.transform(this.courseList, 'name', filter);
+
   }
 
   public ngOnDestroy(): void {

@@ -19,11 +19,11 @@ export class BorderHighlighterDirective implements OnInit {
       currentDate.getMonth(), currentDate.getDate() - 14));
 
     if (startDate < currentDate && startDate >= twoWeeksAgo) {
-      this.renderer.setElementStyle(this.el.nativeElement, 'border', '2px solid green');
+      this.renderer.setElementStyle(this.el.nativeElement, 'border', '3px solid green');
     }
 
     if (startDate > currentDate) {
-      this.renderer.setElementStyle(this.el.nativeElement, 'border', '2px solid blue');
+      this.renderer.setElementStyle(this.el.nativeElement, 'border', '3px solid blue');
     }
   }
 }
