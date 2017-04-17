@@ -12,19 +12,25 @@ export class CourseService {
 
     private _courseList: ICourse[] = [
         {
-            id: 1, name: 'Learn JavaScript Basics', duration: 120, startDate: new Date(2017, 5, 22),
+            id: 1, name: 'Learn JavaScript Basics', duration: 105, startDate: new Date(2017, 2, 26),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
             topRated: true
         },
 
         {
-            id: 2, name: 'HTML & CSS', duration: 120, startDate: new Date(2017, 0, 17),
+            id: 2, name: 'HTML & CSS', duration: 50, startDate: new Date(2017, 0, 17),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
             topRated: false
         },
 
         {
-            id: 3, name: 'Angular 2', duration: 120, startDate: new Date(2017, 3, 1),
+            id: 3, name: 'Angular 2', duration: 145, startDate: new Date(2017, 3, 15),
+            description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
+            topRated: true
+        },
+
+        {
+            id: 4, name: 'React', duration: 220, startDate: new Date(2017, 6, 1),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
             topRated: true
         }];
@@ -35,8 +41,8 @@ export class CourseService {
 
     public getCourseList(): Observable<boolean> {
         let res = new Subject();
-            this.courseListSubject.next(this._courseList);
-            res.next(true);
+        this.courseListSubject.next(this._courseList);
+        res.next(true);
         return res.asObservable();
     }
 

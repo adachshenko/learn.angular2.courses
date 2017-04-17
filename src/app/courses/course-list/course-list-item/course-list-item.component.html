@@ -1,8 +1,9 @@
-<article [ngClass]="{'top-rated': course.topRated}" class="course centered-container">
+<article [ngClass]="{'top-rated': course.topRated}" class="course centered-container" 
+[borderHighlighter] = "course.startDate">
     <div class="course-info">
         <div class="course-header">
-            <h3>{{course.name}}</h3>
-            <span class="course-duration">{{course.duration}} min</span>
+            <h3>{{course.name | uppercase}}</h3>
+            <span class="course-duration">{{course.duration  | myDurationFormatter}}</span>
             <img src="../assets/img/star.png" *ngIf="course.topRated" alt="Star">
             <span class="course-start-date">{{course.startDate | date}}</span>
         </div>

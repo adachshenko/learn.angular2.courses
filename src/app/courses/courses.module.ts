@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { CourseListItemComponent } from './course-list/course-list-item';
 import { ToolboxComponent } from './course-list/toolbox';
@@ -9,6 +10,7 @@ import { CourseService } from './shared';
 import { CoursesComponent } from './courses.component';
 import { AddCourseComponent } from './add-course';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    BrowserModule,
+    SharedModule
   ],
   providers: [CourseService]
 })
