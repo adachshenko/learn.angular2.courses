@@ -23,8 +23,8 @@
 
 .add-course textarea {
     margin: 7px 10px 7px 0;
-    height: 150px;
-    width: 250px;
+    height: 60px;
+    width: 280px;
     border-radius: 14px;
     border: 2px solid lightgray;
 }
