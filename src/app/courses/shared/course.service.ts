@@ -24,7 +24,7 @@ export class CourseService {
         },
 
         {
-            id: 3, name: 'Angular 2', duration: 145, startDate: new Date(2017, 3, 1),
+            id: 3, name: 'Angular 2', duration: 145, startDate: new Date(2017, 3, 15),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
             topRated: true
         },
