@@ -7,20 +7,24 @@ import { ToolboxComponent } from './course-list/toolbox';
 import { CourseListComponent } from './course-list';
 import { CourseService } from './shared';
 import { CoursesComponent } from './courses.component';
+import { AddCourseComponent } from './add-course';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     CourseListItemComponent,
     ToolboxComponent,
     CourseListComponent,
-    CoursesComponent
+    CoursesComponent,
+    AddCourseComponent
   ],
   exports: [
     CoursesComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   providers: [CourseService]
 })

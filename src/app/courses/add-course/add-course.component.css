@@ -1,0 +1,30 @@
+.add-course {
+    align-items: center;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.add-course input {
+    margin: 7px 10px 7px 0;
+    height: 28px;
+    width: 200px;
+    border-radius: 14px;
+    border: 2px solid lightgray;
+}
+
+.add-course button {
+    height: 28px;
+    min-width: 110px;
+    border-radius: 14px;
+    border-style: none;
+    font-size: 15px;
+    font-family: cursive;
+}
+
+.add-course textarea {
+    margin: 7px 10px 7px 0;
+    height: 150px;
+    width: 250px;
+    border-radius: 14px;
+    border: 2px solid lightgray;
+}
