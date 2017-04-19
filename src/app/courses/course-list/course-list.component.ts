@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/Rx';
 
 import { ICourse, CourseService } from '../shared';
 import { LoaderBlockService } from '../../core/loader-block';
@@ -29,10 +30,14 @@ export class CourseListComponent implements OnInit, OnDestroy {
   private courseListSubscriptionList: Subscription = new Subscription();
 
   constructor(private courseService: CourseService,
-    private loaderBlockService: LoaderBlockService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private filterByPipe: FilterByPipe) {
+              private loaderBlockService: LoaderBlockService,
+              private changeDetectorRef: ChangeDetectorRef,
+              private filterByPipe: FilterByPipe) {
     this.courseListSubscriptionList = courseService.courseList
+    .map((courses, i) => courses[i]['title'] = courses[i]['name'])
+    .map((courseList) =>
+      courseList.filter((course) => course.startDate > new Date(new Date().getFullYear(),
+        new Date().getMonth(), new Date().getDate() - 14)))
       .subscribe((_courseList) => {
         this.courseList = _courseList;
         this.changeDetectorRef.markForCheck();

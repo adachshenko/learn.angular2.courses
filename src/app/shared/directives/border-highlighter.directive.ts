@@ -15,8 +15,8 @@ export class BorderHighlighterDirective implements OnInit {
 
   private highlightBotder(startDate: Date) {
     let currentDate: Date = new Date();
-    let twoWeeksAgo: Date = new Date(new Date(currentDate.getFullYear(),
-      currentDate.getMonth(), currentDate.getDate() - 14));
+    let twoWeeksAgo: Date = new Date(currentDate.getFullYear(),
+      currentDate.getMonth(), currentDate.getDate() - 14);
 
     if (startDate < currentDate && startDate >= twoWeeksAgo) {
       this.renderer.setElementStyle(this.el.nativeElement, 'border', '3px solid green');
