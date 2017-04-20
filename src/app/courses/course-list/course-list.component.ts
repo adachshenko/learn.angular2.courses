@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/Rx';
 
 import { ICourse, CourseService } from '../shared';
-import { LoaderBlockService } from '../../core/loader-block';
+import { LoaderBlockService } from '../../core/services';
 import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
 
 @Component({
@@ -24,8 +24,9 @@ import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
 
 export class CourseListComponent implements OnInit, OnDestroy {
 
-  public courseList: ICourse[] = [];
+  public courseList = [];
   public filteredCourseList: ICourse[] = [];
+  public loading: boolean = false;
 
   private courseListSubscriptionList: Subscription = new Subscription();
 
@@ -33,16 +34,8 @@ export class CourseListComponent implements OnInit, OnDestroy {
               private loaderBlockService: LoaderBlockService,
               private changeDetectorRef: ChangeDetectorRef,
               private filterByPipe: FilterByPipe) {
-    this.courseListSubscriptionList = courseService.courseList
-    .map((courses, i) => courses[i]['title'] = courses[i]['name'])
-    .map((courseList) =>
-      courseList.filter((course) => course.startDate > new Date(new Date().getFullYear(),
-        new Date().getMonth(), new Date().getDate() - 14)))
-      .subscribe((_courseList) => {
-        this.courseList = _courseList;
-        this.changeDetectorRef.markForCheck();
-        this.loaderBlockService.hide();
-      });
+
+    this.updateCourseList();
   }
 
   public ngOnInit(): void {
@@ -66,16 +59,33 @@ export class CourseListComponent implements OnInit, OnDestroy {
   public findCourses(filter: string) {
     this.updateCourseList();
     this.courseList = this.filterByPipe.transform(this.courseList, 'name', filter);
-
   }
 
   public ngOnDestroy(): void {
     this.courseListSubscriptionList.unsubscribe();
   }
-  private updateCourseList(): void {
+  private updateCourseList() {
+    this.loading = true;
     this.loaderBlockService.show();
-    this.courseService.getCourseList().subscribe((res) => {
-      console.log(`getCourseList result: ${res}`);
-    });
+    this.courseList = [];
+    this.courseListSubscriptionList = this.courseService.getCourseList().filter((course) => {
+      return course.startDate > new Date(new Date().getFullYear(),
+        new Date().getMonth(), new Date().getDate() - 14);
+    }
+    )
+      .map((course) => {
+        if ('title' in course) {
+          course['name'] = course['title'];
+          delete course['title'];
+        }
+        return course;
+      })
+      .subscribe((course) => {
+        this.courseList.push(course);
+      }, null, () => {
+        this.loaderBlockService.hide();
+        this.changeDetectorRef.markForCheck();
+      });
+
   }
 }

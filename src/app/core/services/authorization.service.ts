@@ -39,8 +39,8 @@ export class AuthorizationService {
         return res.asObservable();
     }
 
-    public isAuthenticated(): boolean {
-        return this.userInfo.getValue() !== null;
+    public isAuthenticated(): Observable<boolean> {
+        return Observable.of(this.userInfo.getValue() !== null);
     }
 
     public getUserInfo() {
