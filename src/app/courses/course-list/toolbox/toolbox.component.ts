@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 import { FilterByPipe } from '../../../shared/pipes/filter-by.pipe';
-import { ICourse } from "../../shared/index";
-import { Subscription } from "rxjs/Subscription";
-import { CourseService } from "../../shared/course.service";
+import { ICourse } from '../../shared/index';
+import { Subscription } from 'rxjs/Subscription';
+import { CourseService } from '../../shared/course.service';
 
 @Component({
     selector: 'toolbox-component',
@@ -12,7 +12,7 @@ import { CourseService } from "../../shared/course.service";
 })
 
 export class ToolboxComponent {
-    
+
     public filter: string = '';
     @Output() public find = new EventEmitter();
 

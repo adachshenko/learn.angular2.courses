@@ -3,8 +3,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from '@angular/core';
-import { AuthorizationService } from '../core/authorization.service';
-import { LoaderBlockService } from '../core/loader-block';
+import { AuthorizationService } from '../core/services/authorization.service';
+import { LoaderBlockService } from '../core/services';
 import { Router } from '@angular/router';
 
 @Component({

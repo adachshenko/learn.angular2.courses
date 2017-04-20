@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { LoaderBlockService } from './loader-block.service';
+import { LoaderBlockService } from '../services';
 
 @Component({
     selector: 'loader-block',

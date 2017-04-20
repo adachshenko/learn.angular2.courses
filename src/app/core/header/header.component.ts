@@ -8,7 +8,7 @@ import {
 import { Subscription } from 'rxjs/Subscription';
 
 import { Router } from '@angular/router';
-import { AuthorizationService } from '../authorization.service';
+import { AuthorizationService } from '../services/authorization.service';
 
 @Component({
     selector: 'header-component',

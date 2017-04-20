@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer';
 import { HeaderComponent } from './header';
 import { LoaderBlockComponent } from './loader-block';
-import { AuthorizationService } from './authorization.service';
-import { LoaderBlockService } from './loader-block';
+import { AuthorizationService } from './services';
+import { LoaderBlockService } from './services';
 
 @NgModule({
     declarations: [
