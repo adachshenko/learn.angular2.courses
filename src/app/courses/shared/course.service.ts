@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
+import { Http } from '@angular/http';
 
 import { ICourse } from './';
 
@@ -10,7 +11,7 @@ export class CourseService {
     public courseList: Observable<any>;
     private courseListSubject: Subject<any[]> = new Subject();
 
-    private _courseList = [
+   /* private _courseList = [
         {
             id: 1, title: 'Learn JavaScript', duration: 105, startDate: new Date(2017, 2, 26),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
@@ -39,26 +40,28 @@ export class CourseService {
             id: 5, title: 'Angular 4', duration: 145, startDate: new Date(2017, 3, 15),
             description: 'jkjkjkjkj jkjkjkjkjk  jjjjjjj   jjjjj   jjjjj',
             topRated: true
-        }];
+        }];*/
+        private baseUrl: string;
 
-    constructor() {
+    constructor(private http: Http) {
         this.courseList = this.courseListSubject.asObservable();
     };
 
     public getCourseList() {
-        console.log(this._courseList);
-        return Observable.from(this._courseList);
+        //console.log(this._courseList);
+        //return Observable.from(this._courseList);
+       return  this.http.request('/courses');
     }
 
-    public deleteCourseById(courseId: number): Observable<boolean> {
+    /*public deleteCourseById(courseId: number): Observable<boolean> {
         let res = new Subject();
         setTimeout(() => {
             this._courseList = this._courseList
-                .filter((course/*: ICourse*/) => courseId !== course.id);
+                .filter((course: ICourse) => courseId !== course.id);
             res.next(true);
         }, 2000);
         return res.asObservable();
-    }
+    }*/
 
     public createCourse(course: ICourse): Observable<boolean> {
         let res = new Subject();

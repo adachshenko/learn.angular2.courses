@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
 
 import { CourseListItemComponent } from './course-list/course-list-item';
 import { ToolboxComponent } from './course-list/toolbox';
@@ -26,6 +27,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     FormsModule,
+    HttpModule,
     RouterModule,
     BrowserModule,
     SharedModule

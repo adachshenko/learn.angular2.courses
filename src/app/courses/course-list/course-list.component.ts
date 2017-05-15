@@ -42,7 +42,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
     this.updateCourseList();
   }
 
-  public removeCourse(courseId: number): void {
+  /*public removeCourse(courseId: number): void {
     if (confirm('Do you really want to delete this course?')) {
       this.loaderBlockService.show();
       this.courseService.deleteCourseById(courseId)
@@ -54,7 +54,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
           }
         });
     }
-  }
+  }*/
 
   public findCourses(filter: string) {
     this.updateCourseList();
