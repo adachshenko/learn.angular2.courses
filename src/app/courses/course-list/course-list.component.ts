@@ -24,25 +24,24 @@ import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
 
 export class CourseListComponent implements OnInit, OnDestroy {
 
-  public courseList = [];
-  public filteredCourseList: ICourse[] = [];
+  public courseList: ICourse[] = [];
   public loading: boolean = false;
-
+  private start = 0;
+  private count = 5;
+  private addCourses;
   private courseListSubscriptionList: Subscription = new Subscription();
 
   constructor(private courseService: CourseService,
               private loaderBlockService: LoaderBlockService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private filterByPipe: FilterByPipe) {
-
-    this.updateCourseList();
+              private changeDetectorRef: ChangeDetectorRef) {
+      this.updateCourseList();
   }
 
   public ngOnInit(): void {
     this.updateCourseList();
   }
 
-  /*public removeCourse(courseId: number): void {
+  public removeCourse(courseId: number): void {
     if (confirm('Do you really want to delete this course?')) {
       this.loaderBlockService.show();
       this.courseService.deleteCourseById(courseId)
@@ -54,34 +53,32 @@ export class CourseListComponent implements OnInit, OnDestroy {
           }
         });
     }
-  }*/
-
-  public findCourses(filter: string) {
-    this.updateCourseList();
-    this.courseList = this.filterByPipe.transform(this.courseList, 'name', filter);
   }
 
   public ngOnDestroy(): void {
     this.courseListSubscriptionList.unsubscribe();
   }
+
+  public addMore() {
+    this.addCourses = true;
+    this.start += this.count;
+    this.updateCourseList();
+    return true;
+  }
+
+   @Output() private delete = new EventEmitter();
+
+    public deleteCourse(): void {
+        this.delete.emit(this.course.id);
+    }
+
   private updateCourseList() {
     this.loading = true;
     this.loaderBlockService.show();
     this.courseList = [];
-    this.courseListSubscriptionList = this.courseService.getCourseList().filter((course) => {
-      return course.startDate > new Date(new Date().getFullYear(),
-        new Date().getMonth(), new Date().getDate() - 14);
-    }
-    )
-      .map((course) => {
-        if ('title' in course) {
-          course['name'] = course['title'];
-          delete course['title'];
-        }
-        return course;
-      })
-      .subscribe((course) => {
-        this.courseList.push(course);
+    this.courseListSubscriptionList = this.courseService.getCourseList(this.start, this.count)
+      .subscribe((_courseList) => {
+        this.courseList = _courseList;
       }, null, () => {
         this.loaderBlockService.hide();
         this.changeDetectorRef.markForCheck();
