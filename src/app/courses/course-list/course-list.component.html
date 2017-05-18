@@ -5,5 +5,7 @@
     </div>
     <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList">
     </course-list-item>
-    <button class="centered-container" (click)="addMore()">Add more</button>
+    <button class="centered-container" (click)="addMoreCourses()" *ngIf="courseList.length % count === 0">
+        Add more
+        </button>
 </section>

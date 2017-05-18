@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { FooterComponent } from './footer';
 import { HeaderComponent } from './header';
@@ -26,7 +27,8 @@ import { LoaderBlockService } from './services';
     imports: [
         FormsModule,
         CommonModule,
-        RouterModule
+        RouterModule,
+        HttpModule
     ]
 })
 export class CoreModule {

@@ -25,7 +25,7 @@ module.exports = (server) => {
             return ~(object.name.toLowerCase().indexOf(queryStr));
         })
 		}
-		courses.slice(from, to);		
+		courses = courses.slice(from, to);		
 		
 		res.json(courses);
 	});

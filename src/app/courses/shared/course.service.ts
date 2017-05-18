@@ -17,8 +17,8 @@ export class CourseService {
         this.courseList = this.courseListSubject.asObservable();
     };
 
-    public getCourseList(start: number, count: number): Observable<ICourse[]> {
-        return this.http.get(`http://localhost:3004/courses?start=${start}&count=${count}`)
+    public getCourseList(start: number, count: number, query: string): Observable<ICourse[]> {
+        return this.http.get(`http://localhost:3004/courses?start=${start}&count=${count}&query=${query}`)
             .map((res: Response) => res.json())
             .map((res: any[]) => res.map((item) => {
                 return {
