@@ -3,15 +3,7 @@
     <div class="centered-container" *ngIf="courseList.length === 0">
         <span>No data. Feel free to add new course.</span>
     </div>
-    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList 
-    | myOrderBy: 'startDate'">
+    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList">
     </course-list-item>
-
-    <button (click)="addMore()">Add more</button>
-    <div class="centered-container" *ngIf="courseList.length === 0">
-        <span>No data. Feel free to add new course.</span>
-    </div>
-    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList 
-    | myOrderBy: 'startDate'">
-    </course-list-item>
+    <button class="centered-container" (click)="addMore()">Add more</button>
 </section>

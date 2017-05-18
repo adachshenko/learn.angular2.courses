@@ -17,7 +17,15 @@ module.exports = (server) => {
 		if (courses.length < to) {
 			to = courses.length;
 		}
-		courses = courses.slice(from, to);
+		courses.sort((a, b) => {
+			return (new Date(b.date)).getTime() - (new Date(a.date)).getTime();
+        });
+		if (queryStr.length) {
+		courses = courses.filter((object) => {
+            return ~(object.name.toLowerCase().indexOf(queryStr));
+        })
+		}
+		courses.slice(from, to);		
 		
 		res.json(courses);
 	});
