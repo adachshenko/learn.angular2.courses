@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -32,12 +32,18 @@ export class AuthorizationService {
     }*/
 
     public login(login: string, password: string) {
-        return this.http.post(`http://localhost:3004/users`,
-        JSON.stringify({ login: login, password: password }))
+       /* let params = new URLSearchParams();
+        params.set('login', login);
+        params.set('password', password);*/
+        let headers      = new Headers({ 'Content-Type': 'application/json' });
+        let options       = new RequestOptions({ headers: headers });
+        return this.http.post(`http://localhost:3004/auth/login`, /*params.toString()*/
+        JSON.stringify({ login: login, password: password}), options)
             .map((response: Response) => {
                 let currentUser = response.json();
-                if (currentUser && currentUser.fakeToken) {
-                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser));
+                console.log("!!!!!!!!!"+JSON.stringify(currentUser.token));
+                if (currentUser && currentUser.token) {
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser.token));
                     //this.userInfo.next(currentUser);
                 }
             });
@@ -57,6 +63,15 @@ export class AuthorizationService {
     }
 
     public getUserInfo() {
-        return this.userInfo.asObservable();
+       /* this.http.post*/
+        //return this.userInfo.asObservable();
+        console.log("&&&&&&&&&&&&&&"+localStorage.getItem(LOCAL_STORAGE_KEY));
+        let headers      = new Headers({ 'Authorization' : localStorage.getItem(LOCAL_STORAGE_KEY)});
+        let options       = new RequestOptions({ headers: headers });
+        return this.http.post(`http://localhost:3004/auth/userinfo`, null, options)
+            .map((response: Response) => {
+                let currentUser = response.json();
+                console.log("!!!!!&&&&&&&&&&&&&&"+JSON.stringify(currentUser));
+                        });
     }
 }
