@@ -28,7 +28,8 @@ export class HeaderComponent implements OnDestroy {
                 private changeDetectionRef: ChangeDetectorRef) {
         this.userInfoSubscription =
             this.authorizationService.getUserInfo().subscribe((userInfo) => {
-                this.userInfo = userInfo;
+                console.log('hhhhhhhhhhhhhhhhhhhhhhh'+`${userInfo.name.first} ${userInfo.name.last}`);
+                this.userInfo = `${userInfo.name.first} ${userInfo.name.last}`;
                 this.changeDetectionRef.markForCheck();
             });
     }

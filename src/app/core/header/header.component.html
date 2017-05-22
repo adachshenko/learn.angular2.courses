@@ -5,7 +5,7 @@
             <h1>Bird - Scientist</h1>
         </div>
         <div class="user-toolbar" *ngIf="authorizationService.isAuthenticated() | async">
-            <span class="user-name">{{userInfo.userName}}</span>
+            <span class="user-name">{{userInfo}}</span>
             <a href="" (click)='logout($event)'>log off</a>
         </div>
         <div class="user-toolbar" *ngIf="!(authorizationService.isAuthenticated() | async)">

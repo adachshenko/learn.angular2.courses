@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from '@angular/http';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -9,10 +9,10 @@ const LOCAL_STORAGE_KEY = 'currentUser';
 @Injectable()
 export class AuthorizationService {
 
-    private userInfo: BehaviorSubject<any>;
+    //private userInfo: BehaviorSubject<any>;
 
     constructor(private http: Http) {
-        this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
+        //this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
     };
 
     /*public login(login: string, password: string): Observable<boolean> {
@@ -32,46 +32,48 @@ export class AuthorizationService {
     }*/
 
     public login(login: string, password: string) {
-       /* let params = new URLSearchParams();
-        params.set('login', login);
-        params.set('password', password);*/
-        let headers      = new Headers({ 'Content-Type': 'application/json' });
-        let options       = new RequestOptions({ headers: headers });
+        /* let params = new URLSearchParams();
+         params.set('login', login);
+         params.set('password', password);*/
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
         return this.http.post(`http://localhost:3004/auth/login`, /*params.toString()*/
-        JSON.stringify({ login: login, password: password}), options)
+            JSON.stringify({ login: login, password: password }), options)
             .map((response: Response) => {
                 let currentUser = response.json();
-                console.log("!!!!!!!!!"+JSON.stringify(currentUser.token));
+                console.log("!!!!!!!!!" + JSON.stringify(currentUser.token));
                 if (currentUser && currentUser.token) {
-                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser.token));
+                    localStorage.setItem(LOCAL_STORAGE_KEY, currentUser.token);
                     //this.userInfo.next(currentUser);
+                    this.getUserInfo();
                 }
             });
     }
 
     public logout(): Observable<boolean> {
         let res = new Subject();
-        console.log(`${this.userInfo.getValue().userName} log out!`);
+       //console.log(`${this.userInfo.getValue().userName} log out!`);
         localStorage.removeItem(LOCAL_STORAGE_KEY);
-        this.userInfo.next(null);
+       // this.userInfo.next(null);
         res.next(true);
         return res.asObservable();
     }
 
     public isAuthenticated(): Observable<boolean> {
-        return Observable.of(this.userInfo.getValue() !== null);
+        //return Observable.of(this.userInfo.getValue() !== null);
+        return Observable.of(localStorage.getItem(LOCAL_STORAGE_KEY)!== null);
     }
 
     public getUserInfo() {
-       /* this.http.post*/
-        //return this.userInfo.asObservable();
-        console.log("&&&&&&&&&&&&&&"+localStorage.getItem(LOCAL_STORAGE_KEY));
-        let headers      = new Headers({ 'Authorization' : localStorage.getItem(LOCAL_STORAGE_KEY)});
-        let options       = new RequestOptions({ headers: headers });
+        let headers = new Headers({ 'Authorization': localStorage.getItem(LOCAL_STORAGE_KEY) });
+        let options = new RequestOptions({ headers: headers });
         return this.http.post(`http://localhost:3004/auth/userinfo`, null, options)
             .map((response: Response) => {
-                let currentUser = response.json();
-                console.log("!!!!!&&&&&&&&&&&&&&"+JSON.stringify(currentUser));
-                        });
+                //let currentUser = response.json();
+               return response.json();
+                //console.log("!!!!!&&&&&&&&&&&&&&" + JSON.stringify(currentUser));
+            });
+
     }
+
 }
