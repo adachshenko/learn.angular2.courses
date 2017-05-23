@@ -18,7 +18,8 @@ export class CourseService {
     };
 
     public getCourseList(start: number, count: number, query: string): Observable<ICourse[]> {
-        return this.http.get(`http://localhost:3004/courses?start=${start}&count=${count}&query=${query}`)
+        return this.http
+        .get(`http://localhost:3004/courses?start=${start}&count=${count}&query=${query}`)
             .map((res: Response) => res.json())
             .map((res: any[]) => res.map((item) => {
                 return {

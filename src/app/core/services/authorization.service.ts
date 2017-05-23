@@ -15,33 +15,13 @@ export class AuthorizationService {
         //this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
     };
 
-    /*public login(login: string, password: string): Observable<boolean> {
-        let res = new Subject();
-        setTimeout(() => {
-            let currentUser = {
-                id: 1,
-                userLogin: login,
-                userName: login.charAt(0).toUpperCase() + login.slice(1)
-            };
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentUser));
-            this.userInfo.next(currentUser);
-            res.next(true);
-            console.log(`${this.userInfo.getValue().userName} log in!`);
-        }, 1000);
-        return res.asObservable();
-    }*/
-
     public login(login: string, password: string) {
-        /* let params = new URLSearchParams();
-         params.set('login', login);
-         params.set('password', password);*/
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post(`http://localhost:3004/auth/login`, /*params.toString()*/
+        return this.http.post(`http://localhost:3004/auth/login`,
             JSON.stringify({ login: login, password: password }), options)
             .map((response: Response) => {
                 let currentUser = response.json();
-                console.log("!!!!!!!!!" + JSON.stringify(currentUser.token));
                 if (currentUser && currentUser.token) {
                     localStorage.setItem(LOCAL_STORAGE_KEY, currentUser.token);
                     //this.userInfo.next(currentUser);
@@ -61,7 +41,7 @@ export class AuthorizationService {
 
     public isAuthenticated(): Observable<boolean> {
         //return Observable.of(this.userInfo.getValue() !== null);
-        return Observable.of(localStorage.getItem(LOCAL_STORAGE_KEY)!== null);
+        return Observable.of(localStorage.getItem(LOCAL_STORAGE_KEY) !== null);
     }
 
     public getUserInfo() {
@@ -69,9 +49,7 @@ export class AuthorizationService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post(`http://localhost:3004/auth/userinfo`, null, options)
             .map((response: Response) => {
-                //let currentUser = response.json();
                return response.json();
-                //console.log("!!!!!&&&&&&&&&&&&&&" + JSON.stringify(currentUser));
             });
 
     }
