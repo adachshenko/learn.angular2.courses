@@ -25,7 +25,7 @@ export class AuthorizationService {
                 if (currentUser && currentUser.token) {
                     localStorage.setItem(LOCAL_STORAGE_KEY, currentUser.token);
                     //this.userInfo.next(currentUser);
-                    this.getUserInfo();
+                    //this.getUserInfo();
                 }
             });
     }

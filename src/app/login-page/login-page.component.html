@@ -1,5 +1,18 @@
-<section class="login-page centered-container">
-    <span>Login</span><input type="text" [(ngModel)]="userLogin">
-    <span>Pssword</span><input type="password"  [(ngModel)]="userPassword">
-    <button (click)="login()">Login</button>
-</section>
+<form #loginForm="ngForm" class="login-page centered-container" (ngSubmit)="login1()">
+    <span>Login</span>
+    <input class="form-control" type="text" name="userLogin" [(ngModel)]="userLogin" required #login="ngModel">
+    <div *ngIf="login.errors && (login.dirty || login.touched)" class="warning-display">
+        <div [hidden]="!login.errors.required">
+            Login is required
+        </div>
+    </div>
+    <span>Pssword</span>
+    <input class="form-control" type="password" name="userPassword" [(ngModel)]="userPassword" required #password="ngModel">
+    <div *ngIf="password.errors && (password.dirty || password.touched)" class="warning-display">
+        <div [hidden]="!password.errors.required">
+            Password is required
+        </div>
+    </div>
+    <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+    <!--<button (click)="login()">Login</button>-->
+</form>

@@ -25,7 +25,7 @@ export class LoginPageComponent {
                 private changeDetectorRef: ChangeDetectorRef,
                 private router: Router) { }
 
-    public login(): void {
+    public login1(): void {
         this.loaderBlockService.show();
         this.authorizationService.login(this.userLogin, this.userPassword)
             .subscribe((result) => {
