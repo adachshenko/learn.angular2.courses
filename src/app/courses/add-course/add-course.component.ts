@@ -2,8 +2,9 @@ import {
     Component,
     ChangeDetectionStrategy
 } from '@angular/core';
-import { ICourse } from '../../shared';
 import { Router } from '@angular/router';
+
+import { ICourse } from '../shared';
 
 @Component({
     selector: 'add-course',
