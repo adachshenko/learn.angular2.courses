@@ -49,11 +49,7 @@ export class CourseService {
 
     public getAuthors() {
         return this.http.get(`http://localhost:3004/authors`)
-            .map((res: Response) => res.json())
-            .map((res: any[]) => res.map((item) => {
-                console.log(`${item.firstName} ${item.lastName}`);
-                return `${item.firstName} ${item.lastName}` ;
-            }));
+            .map((res: Response) => res.json());
 
     }
 }

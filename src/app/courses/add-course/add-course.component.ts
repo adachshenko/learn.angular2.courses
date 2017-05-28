@@ -24,18 +24,20 @@ import { LoaderBlockService } from '../../core/services';
 
 export class AddCourseComponent {
 
-    public authors: string[];
+    public duration: number;
+    public allAuthors: any[];
+    public date;
     private authorsSubscriptionList: Subscription = new Subscription();
     public addEditCourseForm: FormGroup;
 
     constructor(private courseService: CourseService,
-                private router: Router,
-                private loaderBlockService: LoaderBlockService,
-                private changeDetectorRef: ChangeDetectorRef,
-                private fb: FormBuilder) {
+        private router: Router,
+        private loaderBlockService: LoaderBlockService,
+        private changeDetectorRef: ChangeDetectorRef,
+        private fb: FormBuilder) {
         this.loaderBlockService.show();
         this.authorsSubscriptionList = this.courseService.getAuthors().subscribe((_authors) => {
-            this.authors = _authors;
+            this.allAuthors = _authors;
             this.loaderBlockService.hide();
             this.changeDetectorRef.markForCheck();
         });
@@ -47,15 +49,14 @@ export class AddCourseComponent {
     }
 
 
-  //ngOnInit() {
-      createForm() {
-          console.log("!!!!!!!!!!!!12222");
-    this.addEditCourseForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(50)]],
-      description: ['', [Validators.required, Validators.maxLength(500)]],
-      date: ['', [Validators.required, validateDate]],
-      duration: ['', [Validators.required]],
-      authors: [this.authors, [Validators.required]]
-    });
-  }
+    //ngOnInit() {
+    createForm() {
+        this.addEditCourseForm = this.fb.group({
+            title: ['', [Validators.required, Validators.maxLength(50)]],
+            description: ['', [Validators.required, Validators.maxLength(500)]],
+            date: ['', [Validators.required, validateDate]],
+            duration: ['', [Validators.required]],
+            authors: [[]/*, [Validators.required]*/]
+        });
+    }
 }

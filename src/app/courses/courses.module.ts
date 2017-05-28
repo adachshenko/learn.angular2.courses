@@ -11,8 +11,11 @@ import { CourseService } from './shared';
 import { CoursesComponent } from './courses.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { AddCourseComponent, DateValidator, AuthorCheckboxComponent } from './add-course';
-
+import { AddCourseComponent,
+         DateValidator,
+         AuthorCheckboxComponent,
+         DurationInputComponent,
+         DateInputComponent } from './add-course';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { AddCourseComponent, DateValidator, AuthorCheckboxComponent } from './ad
     CoursesComponent,
     AddCourseComponent,
     DateValidator,
-    AuthorCheckboxComponent
+    AuthorCheckboxComponent,
+    DurationInputComponent,
+    DateInputComponent
   ],
   exports: [
     CoursesComponent,

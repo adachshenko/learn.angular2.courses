@@ -9,24 +9,29 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { CourseService } from '../../shared';
 
+export function validateAuthors(fc: FormControl) {
+    return fc.value.length > 0 ? null : { isEmpty: true };
+}
+
 @Component({
   selector: 'author-checkbox',
   template: `
     <div class="scrollbox" >
-    <span *ngFor="let author of authors">
-    <input type="checkbox" 
-    (change)="setValue($event)"
-    [value]="author">
-    {{author}}<br />
-    </span>
+      <span *ngFor="let author of authors">
+        <input type="checkbox"
+          (change)="toggleAuthor($event, author)"
+          [value]="getAuthorState(author.id)"
+        >
+        {{author.firstName}} {{author.lastName}}<br />
+      </span>
     </div>
   `,
   styles: [`
   .scrollbox {
-   border:2px solid #ccc; 
-   width:180px; 
-   height: 100px; 
-   overflow-y: scroll; 
+   border:2px solid #ccc;
+   width:180px;
+   height: 100px;
+   overflow-y: scroll;
 }`],
   providers: [
     {
@@ -34,44 +39,58 @@ import { CourseService } from '../../shared';
       useExisting: forwardRef(() => AuthorCheckboxComponent),
       multi: true
     }
-  ]
+ ,
+        {
+            provide: NG_VALIDATORS,
+            useValue: validateAuthors,
+            multi: true
+        }
+        ]
 })
 export class AuthorCheckboxComponent implements ControlValueAccessor {
 
-  @Input() public authors: string[];
+  @Input() public authors: any[];
   @Input() public nameOption: string;
 
-  selectedValues: string[];
-  isDisabled: boolean;
+  public selectedAuthors: any[];
 
-   public onChange: any = () => {};
-   public onTouched: any = () => {};
-
-  setValue(item){
-    this.value = item.target.value;
-  }
+  public onChange: any = () => {};
+  public onTouched: any = () => {};
 
   set value(newValue){
     if (newValue) {
-      this.selectedValues = newValue;
+      this.selectedAuthors = newValue;
       this.onChange(newValue);
     }
   }
 
   get value() {
-    return this.selectedValues;
+    return this.selectedAuthors;
   }
 
-  writeValue(value: any) {
-    this.selectedValues.push(value);
+  public getAuthorState(authorId) {
+    return !!this.selectedAuthors.find((author) => author.id === authorId);
   }
 
-  registerOnChange(fn) {
+  public toggleAuthor(event, author){
+    if (event.target.checked) {
+      this.value.push(author);
+    } else {
+      this.value = this.selectedAuthors.filter((_author) => _author.id !== author.id);
+    }
+  }
+
+  public writeValue(value: any) {
+    if (value) {
+      this.value = value;
+    }
+  }
+
+  public registerOnChange(fn) {
     this.onChange = fn;
   }
 
-   public registerOnTouched(fn) {
+  public registerOnTouched(fn) {
     this.onTouched = fn;
   }
-
 }

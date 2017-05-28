@@ -13,6 +13,5 @@
             Password is required
         </div>
     </div>
-    <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
-    <!--<button (click)="login()">Login</button>-->
+    <button type="submit" [disabled]="!loginForm.form.valid || !userLogin || !userPassword">Login</button>
 </form>
