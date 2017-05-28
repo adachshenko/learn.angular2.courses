@@ -1,11 +1,27 @@
-<form #AddEditCourse="ngForm" class="add-course login-page centered-container">
+<form [formGroup]="addEditCourseForm" class="add-course centered-container" (ngSubmit)="addCourse()">
     <div class="data"><span>Title</span>
-        <input class="form-control" type="text" id="title" required [(ngModel)]="model.name" name="title"></div>
+        <input type="text" id="title" formControlName="title">
+        <span>{{addEditCourseForm.get('title').errors}}</span>
+        <div *ngIf="addEditCourseForm.get('title').touched || addEditCourseForm.get('title').dirty">
+            <div *ngIf="addEditCourseForm.get('title').errors?.required">
+                Title is required
+            </div>
+            <div *ngIf="addEditCourseForm.get('title').errors?.maxlength">
+                Title must be maximum 50 characters
+            </div>
+        </div>
+    </div>
     <div class="data"><span>Description</span>
-        <textarea class="form-control" id="description" required></textarea></div>
-    <div class="data"><span>Date</span><input type="text"></div>
-    <div class="data"><span>Duration</span><input type="text"></div>
-    <div class="button-container"><button>Save</button>
+        <textarea  id="description" formControlName="description"></textarea></div>
+    <div class="data"><span>Date</span>
+        <input type="text" id="date" formControlName="date"></div>
+    <div class="data"><span>Duration</span>
+        <input type="text" formControlName="duration"></div>
+    <div class="data"><span>Authors </span>
+        <author-checkbox formControlName="authors" [authors]="authors" [nameOption]="authors"></author-checkbox>
+    </div>
+    <div class="button-container">
+        <button type="submit" [disabled]="!addEditCourseForm.valid">Save</button>
         <a [routerLink]=" ['/courses'] "><button>Cancel</button></a>
     </div>
 </form>

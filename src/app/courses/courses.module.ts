@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
@@ -9,9 +9,10 @@ import { ToolboxComponent } from './course-list/toolbox';
 import { CourseListComponent } from './course-list';
 import { CourseService } from './shared';
 import { CoursesComponent } from './courses.component';
-import { AddCourseComponent } from './add-course';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { AddCourseComponent, DateValidator, AuthorCheckboxComponent } from './add-course';
+
 
 @NgModule({
   declarations: [
@@ -19,14 +20,18 @@ import { SharedModule } from '../shared/shared.module';
     ToolboxComponent,
     CourseListComponent,
     CoursesComponent,
-    AddCourseComponent
+    AddCourseComponent,
+    DateValidator,
+    AuthorCheckboxComponent
   ],
   exports: [
-    CoursesComponent
+    CoursesComponent,
+    DateValidator
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule,
     BrowserModule,

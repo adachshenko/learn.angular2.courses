@@ -1,7 +1,7 @@
 .add-course {
     padding: 10px;
     flex-direction: column;
-    width: 22%;
+    width: 23%;
 }
 
 .add-course input {
@@ -23,12 +23,13 @@
 
 .add-course textarea {
     margin: 7px 10px 7px 0;
-    height: 60px;
+    height: 90px;
     width: 220px;
     border-radius: 14px;
     border: 2px solid lightgray;
 }
 .button-container{
+    padding-top: 5px;
     display: flex; 
     flex-direction: row;
     justify-content: flex-end;
