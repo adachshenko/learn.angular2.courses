@@ -36,7 +36,7 @@ export class HeaderComponent implements OnDestroy {
     public logout(event: Event) {
         event.preventDefault();
         if (this.authorizationService.logout()) {
-            this.router.navigate(['/courses']);
+            this.router.navigate(['/login']);
         }
     }
 

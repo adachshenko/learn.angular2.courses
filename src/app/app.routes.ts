@@ -9,6 +9,7 @@ export const ROUTES: Routes = [
     { path: '', component: CoursesComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'courses', component: CoursesComponent },
+    { path: 'courses/:id', component: AddCourseComponent },
     { path: 'add-course', component: AddCourseComponent },
     { path: '**', component: NoContentComponent }
 ];
