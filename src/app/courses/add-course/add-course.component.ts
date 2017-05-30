@@ -3,7 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { validateDate } from './validators/date-validator/date-validator';
@@ -27,11 +27,12 @@ export class AddCourseComponent {
     public duration: number;
     public allAuthors: any[];
     public date;
-    private authorsSubscriptionList: Subscription = new Subscription();
     public addEditCourseForm: FormGroup;
+    private authorsSubscriptionList: Subscription = new Subscription();
+    private courseSubscription: Subscription = new Subscription();
 
     constructor(private courseService: CourseService,
-        private router: Router,
+        private router: ActivatedRoute,
         private loaderBlockService: LoaderBlockService,
         private changeDetectorRef: ChangeDetectorRef,
         private fb: FormBuilder) {
@@ -41,6 +42,18 @@ export class AddCourseComponent {
             this.loaderBlockService.hide();
             this.changeDetectorRef.markForCheck();
         });
+        this.courseSubscription = this.courseService
+        .getCourseById(this.router.snapshot.params['id']).subscribe((_course) => {
+            console.log(_course);
+            this.addEditCourseForm.setValue({
+                title: _course.name,
+                description: _course.description,
+                date: new Date(_course.date),
+                duration: _course.length,
+                authors: _course.authors
+            });
+            this.changeDetectorRef.markForCheck();
+        });
         this.createForm();
     }
 
@@ -48,15 +61,13 @@ export class AddCourseComponent {
         console.log(this.addEditCourseForm.value);
     }
 
-
-    //ngOnInit() {
-    createForm() {
+    private createForm() {
         this.addEditCourseForm = this.fb.group({
             title: ['', [Validators.required, Validators.maxLength(50)]],
             description: ['', [Validators.required, Validators.maxLength(500)]],
-            date: ['', [Validators.required, validateDate]],
+            date: [new Date(), [Validators.required, validateDate]],
             duration: ['', [Validators.required]],
-            authors: [[]/*, [Validators.required]*/]
+            authors: [[]]
         });
     }
 }

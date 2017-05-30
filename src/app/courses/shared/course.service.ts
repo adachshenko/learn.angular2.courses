@@ -37,6 +37,11 @@ export class CourseService {
         return this.http.delete(`http://localhost:3004/courses/${courseId}`);
     }
 
+    public getCourseById(courseId: number): Observable<any> {
+        return this.http.get(`http://localhost:3004/courses/${courseId}`)
+        .map((res: Response) => res.json());
+    }
+
     public createCourse(course: ICourse): Observable<boolean> {
         let res = new Subject();
         return res.asObservable();

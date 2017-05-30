@@ -1,29 +1,21 @@
-.toolbox {           
-            align-items: center;          
-            padding: 10px;
-        }
-        
+.toolbox {
+    align-items: center;
+    padding: 10px;
+}
+
 .toolbox input {
-          
     margin: 7px 10px 7px 0;
     height: 28px;
     width: 300px;
     border-radius: 14px;
-    border: 2px solid lightgray;     
-            
-        }
-        
-.toolbox button {
+    border: 2px solid lightgray;
+}
 
+.toolbox button {
     height: 28px;
     min-width: 110px;
     border-radius: 14px;
-    border-style:none;
+    border-style: none;
     font-size: 15px;
-    font-family:cursive;
-            
-    }
-    
-.add-button {
-    margin-left: auto;
+    font-family: cursive;
 }

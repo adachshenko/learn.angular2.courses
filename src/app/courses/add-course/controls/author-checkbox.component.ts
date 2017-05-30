@@ -20,7 +20,7 @@ export function validateAuthors(fc: FormControl) {
       <span *ngFor="let author of authors">
         <input type="checkbox"
           (change)="toggleAuthor($event, author)"
-          [value]="getAuthorState(author.id)"
+          [checked]="getAuthorState(author.id)"
         >
         {{author.firstName}} {{author.lastName}}<br />
       </span>

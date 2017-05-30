@@ -5,6 +5,8 @@ import {
     EventEmitter,
     ChangeDetectionStrategy
 } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { ICourse } from '../../shared';
 
 @Component({
@@ -20,7 +22,13 @@ export class CourseListItemComponent {
     @Input() public course: ICourse;
     @Output() private delete = new EventEmitter();
 
+     constructor(private router: Router) {}
+
     public deleteCourse(): void {
         this.delete.emit(this.course.id);
     }
+
+    public goToCourseDetails() {
+  this.router.navigate(['/courses', this.course.id]);
+}
 }

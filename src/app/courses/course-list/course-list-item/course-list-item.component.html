@@ -1,5 +1,4 @@
-<article [ngClass]="{'top-rated': course.topRated}" class="course centered-container" 
-[borderHighlighter] = "course.startDate">
+<article [ngClass]="{'top-rated': course.topRated}" class="course centered-container" [borderHighlighter]="course.startDate">
     <div class="course-info">
         <div class="course-header">
             <h3>{{course.name | uppercase}}</h3>
@@ -10,7 +9,8 @@
         <p>{{course.description}}</p>
     </div>
     <div class="course-buttons">
-        <button>Edit</button>
+        <!--<a [routerLink]="['/courses', course.id]"><button (click)="deleteCourse()">Add course</button></a>-->
+        <button (click)="goToCourseDetails()">Edit</button>
         <button (click)="deleteCourse()">Delete</button>
     </div>
 </article>

@@ -2,7 +2,6 @@ import { Component, forwardRef, OnChanges } from '@angular/core';
 import {
     ControlValueAccessor,
     NG_VALUE_ACCESSOR,
-    NG_VALIDATORS,
     FormControl
 } from '@angular/forms';
 
