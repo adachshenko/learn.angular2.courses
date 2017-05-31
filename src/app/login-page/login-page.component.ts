@@ -36,6 +36,7 @@ export class LoginPageComponent {
                     this.changeDetectorRef.markForCheck();
                 }*/
                 this.loaderBlockService.hide();
+                this.changeDetectorRef.markForCheck();
             },
             error => {
                     console.log(error+"!!!!!!!!!!!!!");
