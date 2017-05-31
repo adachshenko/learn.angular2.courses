@@ -9,10 +9,10 @@ const LOCAL_STORAGE_KEY = 'currentUser';
 @Injectable()
 export class AuthorizationService {
 
-    //private userInfo: BehaviorSubject<any>;
+    // private userInfo: BehaviorSubject<any>;
 
     constructor(private http: Http) {
-        //this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
+        // this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
     };
 
     public login(login: string, password: string) {
@@ -24,32 +24,32 @@ export class AuthorizationService {
                 let currentUser = response.json();
                 if (currentUser && currentUser.token) {
                     localStorage.setItem(LOCAL_STORAGE_KEY, currentUser.token);
-                    //this.userInfo.next(currentUser);
-                    //this.getUserInfo();
+                    // this.userInfo.next(currentUser);
+                    // this.getUserInfo();
                 }
             });
     }
 
     public logout(): Observable<boolean> {
         let res = new Subject();
-       //console.log(`${this.userInfo.getValue().userName} log out!`);
+        // console.log(`${this.userInfo.getValue().userName} log out!`);
         localStorage.removeItem(LOCAL_STORAGE_KEY);
-       // this.userInfo.next(null);
+        // this.userInfo.next(null);
         res.next(true);
         return res.asObservable();
     }
 
     public isAuthenticated(): Observable<boolean> {
-        //return Observable.of(this.userInfo.getValue() !== null);
+        // return Observable.of(this.userInfo.getValue() !== null);
         return Observable.of(localStorage.getItem(LOCAL_STORAGE_KEY) !== null);
     }
 
     public getUserInfo() {
-        let headers = new Headers({ 'Authorization': localStorage.getItem(LOCAL_STORAGE_KEY) });
+        let headers = new Headers({ Authorization: localStorage.getItem(LOCAL_STORAGE_KEY) });
         let options = new RequestOptions({ headers: headers });
         return this.http.post(`http://localhost:3004/auth/userinfo`, null, options)
             .map((response: Response) => {
-               return response.json();
+                return response.json();
             });
 
     }

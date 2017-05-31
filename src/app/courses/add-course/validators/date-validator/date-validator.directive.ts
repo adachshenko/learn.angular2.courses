@@ -11,8 +11,7 @@ import { validateDate } from './date-validator';
     ]
 })
 export class DateValidator implements Validator {
-    validate(c: FormControl) {
-        console.log('A тут есть!!!!!!!!1');
+    public validate(c: FormControl) {
         return validateDate(c);
     }
 }

@@ -4,6 +4,7 @@ import { Directive, ElementRef, HostListener, Input, Renderer, OnInit } from '@a
 })
 export class BorderHighlighterDirective implements OnInit {
 
+  // tslint:disable-next-line:no-input-rename
   @Input('borderHighlighter') public startDate: Date;
 
   constructor(private el: ElementRef, private renderer: Renderer) {

@@ -24,8 +24,8 @@ import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
 export class CourseListComponent implements OnDestroy {
 
   public courseList: ICourse[] = [];
+  public count = 11;
   private start = 0;
-  private count = 11;
   private query = '';
   private courseListSubscriptionList: Subscription = new Subscription();
 

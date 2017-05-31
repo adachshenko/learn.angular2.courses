@@ -32,10 +32,10 @@ export class AddCourseComponent {
     private courseSubscription: Subscription = new Subscription();
 
     constructor(private courseService: CourseService,
-        private router: ActivatedRoute,
-        private loaderBlockService: LoaderBlockService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private fb: FormBuilder) {
+                private router: ActivatedRoute,
+                private loaderBlockService: LoaderBlockService,
+                private changeDetectorRef: ChangeDetectorRef,
+                private fb: FormBuilder) {
         this.loaderBlockService.show();
         this.authorsSubscriptionList = this.courseService.getAuthors().subscribe((_authors) => {
             this.allAuthors = _authors;
@@ -43,17 +43,17 @@ export class AddCourseComponent {
             this.changeDetectorRef.markForCheck();
         });
         this.courseSubscription = this.courseService
-        .getCourseById(this.router.snapshot.params['id']).subscribe((_course) => {
-            console.log(_course);
-            this.addEditCourseForm.setValue({
-                title: _course.name,
-                description: _course.description,
-                date: new Date(_course.date),
-                duration: _course.length,
-                authors: _course.authors
+            .getCourseById(this.router.snapshot.params['id']).subscribe((_course) => {
+                console.log(_course);
+                this.addEditCourseForm.setValue({
+                    title: _course.name,
+                    description: _course.description,
+                    date: new Date(_course.date),
+                    duration: _course.length,
+                    authors: _course.authors
+                });
+                this.changeDetectorRef.markForCheck();
             });
-            this.changeDetectorRef.markForCheck();
-        });
         this.createForm();
     }
 

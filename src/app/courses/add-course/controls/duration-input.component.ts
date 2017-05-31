@@ -28,7 +28,9 @@ export class DurationInputComponent implements ControlValueAccessor {
 
     @Input() public duration: string = '';
 
+    // tslint:disable-next-line:no-empty
     public onChange: any = () => {};
+    // tslint:disable-next-line:no-empty
     public onTouched: any = () => {};
 
     public setValue(value) {

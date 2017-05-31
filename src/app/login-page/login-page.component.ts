@@ -29,17 +29,12 @@ export class LoginPageComponent {
         this.loaderBlockService.show();
         this.authorizationService.login(this.userLogin, this.userPassword)
             .subscribe((result) => {
-               // if (result) {
-                    this.router.navigate(['/courses']);
-                    
+                // if (result) {
+                this.router.navigate(['/courses']);
                 /*} else {
                     this.changeDetectorRef.markForCheck();
                 }*/
                 this.loaderBlockService.hide();
-            },
-            error => {
-                    console.log(error+"!!!!!!!!!!!!!");
-                    
-                });
+            });
     }
 }

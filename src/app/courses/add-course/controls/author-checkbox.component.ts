@@ -54,7 +54,9 @@ export class AuthorCheckboxComponent implements ControlValueAccessor {
 
   public selectedAuthors: any[];
 
+  // tslint:disable-next-line:no-empty
   public onChange: any = () => {};
+  // tslint:disable-next-line:no-empty
   public onTouched: any = () => {};
 
   set value(newValue){
@@ -72,9 +74,9 @@ export class AuthorCheckboxComponent implements ControlValueAccessor {
     return !!this.selectedAuthors.find((author) => author.id === authorId);
   }
 
-  public toggleAuthor(event, author){
+  public toggleAuthor(event, author) {
     if (event.target.checked) {
-      this.value.push(author);
+      this.value = this.value.concat(author);
     } else {
       this.value = this.selectedAuthors.filter((_author) => _author.id !== author.id);
     }
