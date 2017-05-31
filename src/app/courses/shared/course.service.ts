@@ -37,14 +37,17 @@ export class CourseService {
         return this.http.delete(`http://localhost:3004/courses/${courseId}`);
     }
 
-    public createCourse(course: ICourse): Observable<boolean> {
-        let res = new Subject();
-        return res.asObservable();
+    public getCourseById(courseId: number): Observable<any> {
+        return this.http.get(`http://localhost:3004/courses/${courseId}`)
+        .map((res: Response) => res.json());
     }
 
-    public updateCourse(course: ICourse): Observable<boolean> {
-        let res = new Subject();
-        return res.asObservable();
+    public createCourse(course): Observable<any> {
+       return this.http.post(`http://localhost:3004/courses`, course);
+    }
+
+    public updateCourse(course, courseId): Observable<any> {
+        return this.http.put(`http://localhost:3004/courses/${courseId}`, course);
     }
 
     public getAuthors() {

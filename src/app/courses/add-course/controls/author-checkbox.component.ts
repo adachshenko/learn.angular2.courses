@@ -74,7 +74,7 @@ export class AuthorCheckboxComponent implements ControlValueAccessor {
 
   public toggleAuthor(event, author){
     if (event.target.checked) {
-      this.value.push(author);
+      this.value = this.value.concat(author);
     } else {
       this.value = this.selectedAuthors.filter((_author) => _author.id !== author.id);
     }

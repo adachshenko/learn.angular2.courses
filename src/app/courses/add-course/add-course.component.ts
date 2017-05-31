@@ -3,7 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { validateDate } from './validators/date-validator/date-validator';
@@ -27,36 +27,64 @@ export class AddCourseComponent {
     public duration: number;
     public allAuthors: any[];
     public date;
-    private authorsSubscriptionList: Subscription = new Subscription();
     public addEditCourseForm: FormGroup;
+    private authorsSubscriptionList: Subscription = new Subscription();
+    private courseSubscription: Subscription = new Subscription();
 
     constructor(private courseService: CourseService,
-        private router: Router,
-        private loaderBlockService: LoaderBlockService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private fb: FormBuilder) {
+                private aRoute: ActivatedRoute,
+                private router: Router,
+                private loaderBlockService: LoaderBlockService,
+                private changeDetectorRef: ChangeDetectorRef,
+                private fb: FormBuilder) {
         this.loaderBlockService.show();
         this.authorsSubscriptionList = this.courseService.getAuthors().subscribe((_authors) => {
             this.allAuthors = _authors;
             this.loaderBlockService.hide();
             this.changeDetectorRef.markForCheck();
         });
+
+        if (this.aRoute.snapshot.params['id']) {
+            this.courseSubscription = this.courseService
+                .getCourseById(this.aRoute.snapshot.params['id']).subscribe((_course) => {
+                    console.log(_course);
+                    this.addEditCourseForm.setValue({
+                        title: _course.name,
+                        description: _course.description,
+                        date: new Date(_course.date),
+                        duration: _course.length,
+                        authors: _course.authors
+                    });
+                    this.changeDetectorRef.markForCheck();
+                });
+        }
         this.createForm();
     }
 
     public addCourse() {
-        console.log(this.addEditCourseForm.value);
+        let course = {
+            name: this.addEditCourseForm.value.title,
+            description: this.addEditCourseForm.value.description,
+            date: this.addEditCourseForm.value.date,
+            length: this.addEditCourseForm.value.duration,
+            authors: this.addEditCourseForm.value.authors
+        };
+        let method = this.aRoute.snapshot.params['id'] ?
+            this.courseService.updateCourse(course,
+                this.aRoute.snapshot.params['id']) :
+            this.courseService.createCourse(course);
+        method.subscribe((response) => {
+            this.router.navigate(['/courses']);
+        });
     }
 
-
-    //ngOnInit() {
-    createForm() {
+    private createForm() {
         this.addEditCourseForm = this.fb.group({
             title: ['', [Validators.required, Validators.maxLength(50)]],
             description: ['', [Validators.required, Validators.maxLength(500)]],
-            date: ['', [Validators.required, validateDate]],
+            date: [new Date(), [Validators.required, validateDate]],
             duration: ['', [Validators.required]],
-            authors: [[]/*, [Validators.required]*/]
+            authors: [[]]
         });
     }
 }
