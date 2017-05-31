@@ -39,9 +39,9 @@ export class AuthorizationService {
         return res.asObservable();
     }
 
-    public isAuthenticated(): Observable<boolean> {
-        // return Observable.of(this.userInfo.getValue() !== null);
-        return Observable.of(localStorage.getItem(LOCAL_STORAGE_KEY) !== null);
+    public isAuthenticated(){
+        //return Observable.of(this.userInfo.getValue() !== null);
+        return localStorage.getItem(LOCAL_STORAGE_KEY) !== null;
     }
 
     public getUserInfo() {

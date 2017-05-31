@@ -21,9 +21,9 @@ export class LoginPageComponent {
     public userPassword: string;
 
     constructor(private authorizationService: AuthorizationService,
-                private loaderBlockService: LoaderBlockService,
-                private changeDetectorRef: ChangeDetectorRef,
-                private router: Router) { }
+        private loaderBlockService: LoaderBlockService,
+        private changeDetectorRef: ChangeDetectorRef,
+        private router: Router) { }
 
     public login1(): void {
         this.loaderBlockService.show();
@@ -35,6 +35,12 @@ export class LoginPageComponent {
                     this.changeDetectorRef.markForCheck();
                 }*/
                 this.loaderBlockService.hide();
+
+                this.changeDetectorRef.markForCheck();
+            },
+            error => {
+                console.log(error + "!!!!!!!!!!!!!");
+
             });
     }
 }

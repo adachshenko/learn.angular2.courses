@@ -9,6 +9,7 @@ import { HeaderComponent } from './header';
 import { LoaderBlockComponent } from './loader-block';
 import { AuthorizationService } from './services';
 import { LoaderBlockService } from './services';
+//import { AuthGuard } from './services';
 
 @NgModule({
     declarations: [

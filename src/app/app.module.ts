@@ -29,6 +29,7 @@ import { CoreModule } from './core/core.module';
 import { NoContentComponent } from './no-content';
 import { LoginPageModule } from './login-page';
 import { SharedModule } from './shared/shared.module';
+import { AuthGuard } from './core/services';
 // Application wide providers
 const APP_PROVIDERS = [
   ...APP_RESOLVER_PROVIDERS,
@@ -62,7 +63,8 @@ type StoreType = {
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    AuthGuard
   ]
 })
 export class AppModule {

@@ -42,7 +42,9 @@ export class AddCourseComponent {
             this.loaderBlockService.hide();
             this.changeDetectorRef.markForCheck();
         });
-        this.courseSubscription = this.courseService
+
+        if (this.router.snapshot.params['id']) {
+            this.courseSubscription = this.courseService
             .getCourseById(this.router.snapshot.params['id']).subscribe((_course) => {
                 console.log(_course);
                 this.addEditCourseForm.setValue({
@@ -54,6 +56,10 @@ export class AddCourseComponent {
                 });
                 this.changeDetectorRef.markForCheck();
             });
+<<<<<<< HEAD
+=======
+        }
+>>>>>>> 8e2f83d46ee090db57e798af96ce49f0f5398990
         this.createForm();
     }
 
