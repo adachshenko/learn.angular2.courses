@@ -6,24 +6,28 @@ import { HttpModule } from '@angular/http';
 
 import { FooterComponent } from './footer';
 import { HeaderComponent } from './header';
+import { BreadCrumbsComponent } from './header/breadcrumbs';
 import { LoaderBlockComponent } from './loader-block';
 import { AuthorizationService } from './services';
 import { LoaderBlockService } from './services';
-//import { AuthGuard } from './services';
+import { BreadcrumbsService } from './services';
 
 @NgModule({
     declarations: [
         FooterComponent,
         HeaderComponent,
+        BreadCrumbsComponent,
         LoaderBlockComponent
     ],
     exports: [
         FooterComponent,
         HeaderComponent,
+        BreadCrumbsComponent,
         LoaderBlockComponent],
     providers: [
         AuthorizationService,
-        LoaderBlockService
+        LoaderBlockService,
+        BreadcrumbsService
     ],
     imports: [
         FormsModule,

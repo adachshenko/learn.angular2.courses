@@ -3,7 +3,7 @@
         <div class="site-name">
             <img src="./assets/img/logo.jpg" alt="Bird - Scientist">
             <h1>Bird - Scientist</h1>
-        </div>
+        </div>        
         <div class="user-toolbar" *ngIf="authorizationService.isAuthenticated()">
             <span class="user-name">{{userInfo}}</span>
             <a href="" (click)='logout($event)'>log off</a>
@@ -12,4 +12,5 @@
             <a [routerLink]=" ['./login'] ">log in</a>
         </div>
     </div>
+    <breadcrumbs-component class="centered-container"></breadcrumbs-component>
 </header>
