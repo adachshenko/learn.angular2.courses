@@ -42,14 +42,12 @@ export class CourseService {
         .map((res: Response) => res.json());
     }
 
-    public createCourse(course: ICourse): Observable<boolean> {
-        let res = new Subject();
-        return res.asObservable();
+    public createCourse(course): Observable<any> {
+       return this.http.post(`http://localhost:3004/courses`, course);
     }
 
-    public updateCourse(course: ICourse): Observable<boolean> {
-        let res = new Subject();
-        return res.asObservable();
+    public updateCourse(course, courseId): Observable<any> {
+        return this.http.put(`http://localhost:3004/courses/${courseId}`, course);
     }
 
     public getAuthors() {

@@ -4,7 +4,7 @@ import {
     ChangeDetectorRef,
     OnDestroy
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { validateDate } from './validators/date-validator/date-validator';
@@ -33,11 +33,12 @@ export class AddCourseComponent implements OnDestroy {
     private courseSubscription: Subscription = new Subscription();
 
     constructor(private courseService: CourseService,
-        private breadCrumbsService: BreadcrumbsService,
-        private router: ActivatedRoute,
-        private loaderBlockService: LoaderBlockService,
-        private changeDetectorRef: ChangeDetectorRef,
-        private fb: FormBuilder) {
+                private breadCrumbsService: BreadcrumbsService,
+                private aRoute: ActivatedRoute,
+                private router: Router,
+                private loaderBlockService: LoaderBlockService,
+                private changeDetectorRef: ChangeDetectorRef,
+                private fb: FormBuilder) {
         this.loaderBlockService.show();
         this.authorsSubscriptionList = this.courseService.getAuthors().subscribe((_authors) => {
             this.allAuthors = _authors;
@@ -45,9 +46,9 @@ export class AddCourseComponent implements OnDestroy {
             this.changeDetectorRef.markForCheck();
         });
 
-        if (this.router.snapshot.params['id']) {
+        if (this.aRoute.snapshot.params['id']) {
             this.courseSubscription = this.courseService
-                .getCourseById(this.router.snapshot.params['id']).subscribe((_course) => {
+                .getCourseById(this.aRoute.snapshot.params['id']).subscribe((_course) => {
                     console.log(_course);
                     this.addEditCourseForm.setValue({
                         title: _course.name,
@@ -64,10 +65,23 @@ export class AddCourseComponent implements OnDestroy {
     }
 
     public addCourse() {
-        console.log(this.addEditCourseForm.value);
+        let course = {
+            name: this.addEditCourseForm.value.title,
+            description: this.addEditCourseForm.value.description,
+            date: this.addEditCourseForm.value.date,
+            length: this.addEditCourseForm.value.duration,
+            authors: this.addEditCourseForm.value.authors
+        };
+        let method = this.aRoute.snapshot.params['id'] ?
+            this.courseService.updateCourse(course,
+                this.aRoute.snapshot.params['id']) :
+            this.courseService.createCourse(course);
+        method.subscribe((response) => {
+            this.router.navigate(['/courses']);
+        });
     }
 
-     public ngOnDestroy() {
+    public ngOnDestroy() {
         this.breadCrumbsService.set('');
     }
 
