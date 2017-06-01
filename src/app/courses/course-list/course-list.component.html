@@ -1,11 +1,11 @@
 <toolbox-component (find)="findCourses($event)"></toolbox-component>
 <section>
-    <div class="centered-container" *ngIf="courseList.length === 0">
+    <div class="centered-container" *ngIf="(courseList | async)?.length === 0">
         <span>No data. Feel free to add new course.</span>
     </div>
-    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList">
+    <course-list-item [course]="course" (delete)="removeCourse($event)" *ngFor="let course of courseList | async">
     </course-list-item>
-    <button class="centered-container" (click)="addMoreCourses()" *ngIf="courseList.length % count === 0">
+    <button class="centered-container" (click)="addMoreCourses()" *ngIf="(courseList | async)?.length % count === 0">
         Add more
         </button>
 </section>

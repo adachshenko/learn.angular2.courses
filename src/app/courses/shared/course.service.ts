@@ -4,9 +4,10 @@ import { Subject } from 'rxjs/Subject';
 import { Http, Response } from '@angular/http';
 import { Store } from '@ngrx/store';
 
-import { GetCoursesAction } from './courses.action';
+import { AddToCoursesAction } from './courses.action';
 import { AppStore } from './../../core/store/app-store';
 import { ICourse } from './';
+import { LoaderBlockService } from '../../core/services';
 
 @Injectable()
 export class CourseService {
@@ -17,7 +18,8 @@ export class CourseService {
     private baseUrl: string;
 
     constructor(private http: Http,
-                private store: Store<AppStore>) {
+                private store: Store<AppStore>,
+                private loaderBlockService: LoaderBlockService) {
         this.courseList = this.courseListSubject.asObservable();
     };
 
@@ -36,7 +38,8 @@ export class CourseService {
                 };
             }))
             .subscribe((courseList) => {
-                this.store.dispatch(new GetCoursesAction(courseList));
+                this.store.dispatch(new AddToCoursesAction(courseList));
+                this.loaderBlockService.hide();
             });
     }
 

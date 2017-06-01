@@ -14,6 +14,7 @@ import { ICourse, CourseService } from '../shared';
 import { LoaderBlockService } from '../../core/services';
 import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
 import { AppStore } from './../../core/store/app-store';
+import { ClearCoursesAction, DeleteCoursesAction } from '../shared/courses.action';
 
 @Component({
   selector: 'course-list',
@@ -25,7 +26,7 @@ import { AppStore } from './../../core/store/app-store';
 
 export class CourseListComponent implements OnDestroy {
 
-  public courseList: ICourse[] = [];
+  public courseList;
   public count = 11;
   private start = 0;
   private query = '';
@@ -35,14 +36,9 @@ export class CourseListComponent implements OnDestroy {
               private loaderBlockService: LoaderBlockService,
               private changeDetectorRef: ChangeDetectorRef,
               private store: Store<AppStore>) {
-    this.courseList = [];
+    this.courseList = this.store.select('courses');
+    this.store.dispatch(new ClearCoursesAction());
     this.getCourseList(this.start, this.count, '');
-    this.courseListSubscriptionList = this.store.select('courses')
-      .subscribe((_courseList) => {
-        this.courseList = this.courseList.concat(_courseList);
-        this.loaderBlockService.hide();
-        this.changeDetectorRef.markForCheck();
-      });
   }
 
   public removeCourse(courseId: number): void {
@@ -51,7 +47,7 @@ export class CourseListComponent implements OnDestroy {
       this.courseService.deleteCourseById(courseId)
         .subscribe((removeResult) => {
           if (removeResult) {
-            this.courseList = this.courseList.filter((course: ICourse) => courseId !== course.id);
+            this.store.dispatch(new DeleteCoursesAction(courseId));
             this.getCourseList(this.start + this.count - 1, 1, this.query);
           } else {
             console.log(`Error during course with id ${courseId} remove`);
@@ -72,7 +68,7 @@ export class CourseListComponent implements OnDestroy {
   public findCourses(filter: string) {
     this.start = 0;
     this.query = filter.toLowerCase();
-    this.courseList = [];
+    this.store.dispatch(new ClearCoursesAction());
     this.getCourseList(this.start, this.count, this.query);
   }
 
