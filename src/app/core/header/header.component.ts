@@ -6,10 +6,11 @@ import {
     ChangeDetectorRef
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-
 import { Router } from '@angular/router';
-import { AuthorizationService } from '../services/authorization.service';
 
+import { AuthorizationService } from '../services/authorization.service';
+import { AppStore } from '../store/app-store';
+import { Store } from '@ngrx/store';
 @Component({
     selector: 'header-component',
     templateUrl: './header.component.html',
@@ -25,12 +26,15 @@ export class HeaderComponent implements OnDestroy {
 
     constructor(public authorizationService: AuthorizationService,
                 private router: Router,
-                private changeDetectionRef: ChangeDetectorRef) {
-        this.userInfoSubscription =
-            this.authorizationService.getUserInfo().subscribe((userInfo) => {
-                this.userInfo = `${userInfo.name.first} ${userInfo.name.last}`;
-                this.changeDetectionRef.markForCheck();
-            });
+                private changeDetectionRef: ChangeDetectorRef,
+                private store: Store<AppStore>) {
+                this.userInfoSubscription = store.select('userInfo').subscribe((userInfo) => {
+                    if (userInfo['name']) {
+                        this.userInfo = `${userInfo['name'].first} ${userInfo['name'].last}`;
+                        this.changeDetectionRef.markForCheck();
+                    }
+                });
+                this.authorizationService.getUserInfo();
     }
 
     public logout(event: Event) {

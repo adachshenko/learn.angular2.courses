@@ -3,16 +3,17 @@ import { Http, Response, RequestOptions, Headers, Request, RequestMethod } from 
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
+import { AppStore } from '../store/app-store';
+import { Store } from '@ngrx/store';
+import { AddTokenAction, AddUserAction } from '../../login-page/user.actions';
 
 const LOCAL_STORAGE_KEY = 'currentUser';
 
 @Injectable()
 export class AuthorizationService {
 
-    // private userInfo: BehaviorSubject<any>;
-
-    constructor(private http: Http) {
-        // this.userInfo = new BehaviorSubject(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)));
+    constructor(private http: Http,
+                private store: Store<AppStore>) {
     };
 
     public login(login: string, password: string) {
@@ -24,34 +25,31 @@ export class AuthorizationService {
                 let currentUser = response.json();
                 if (currentUser && currentUser.token) {
                     localStorage.setItem(LOCAL_STORAGE_KEY, currentUser.token);
-                    // this.userInfo.next(currentUser);
-                    // this.getUserInfo();
+                    this.store.dispatch(new AddTokenAction(currentUser.token));
+                    this.getUserInfo();
                 }
             });
     }
 
     public logout(): Observable<boolean> {
         let res = new Subject();
-        // console.log(`${this.userInfo.getValue().userName} log out!`);
         localStorage.removeItem(LOCAL_STORAGE_KEY);
-        // this.userInfo.next(null);
+        this.store.dispatch(new AddTokenAction(null));
         res.next(true);
         return res.asObservable();
     }
 
-    public isAuthenticated(){
-        //return Observable.of(this.userInfo.getValue() !== null);
+    public isAuthenticated() {
         return localStorage.getItem(LOCAL_STORAGE_KEY) !== null;
     }
 
     public getUserInfo() {
         let headers = new Headers({ Authorization: localStorage.getItem(LOCAL_STORAGE_KEY) });
         let options = new RequestOptions({ headers: headers });
-        return this.http.post(`http://localhost:3004/auth/userinfo`, null, options)
-            .map((response: Response) => {
-                return response.json();
+        this.http.post(`http://localhost:3004/auth/userinfo`, null, options)
+            .subscribe((response: Response) => {
+                this.store.dispatch(new AddUserAction (response.json()));
             });
-
     }
 
 }
