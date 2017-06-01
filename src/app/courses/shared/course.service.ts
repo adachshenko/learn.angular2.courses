@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { Http, Response } from '@angular/http';
+import { Store } from '@ngrx/store';
 
+import { GetCoursesAction } from './courses.action';
+import { AppStore } from './../../core/store/app-store';
 import { ICourse } from './';
 
 @Injectable()
@@ -13,12 +16,13 @@ export class CourseService {
 
     private baseUrl: string;
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private store: Store<AppStore>) {
         this.courseList = this.courseListSubject.asObservable();
     };
 
-    public getCourseList(start: number, count: number, query: string): Observable<ICourse[]> {
-        return this.http
+    public getCourseList(start: number, count: number, query: string) {
+        this.http
         .get(`http://localhost:3004/courses?start=${start}&count=${count}&query=${query}`)
             .map((res: Response) => res.json())
             .map((res: any[]) => res.map((item) => {
@@ -30,7 +34,10 @@ export class CourseService {
                     description: item.description,
                     topRated: item.isTopRated
                 };
-            }));
+            }))
+            .subscribe((courseList) => {
+                this.store.dispatch(new GetCoursesAction(courseList));
+            });
     }
 
     public deleteCourseById(courseId: number) {

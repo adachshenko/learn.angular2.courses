@@ -3,13 +3,11 @@ import { ICourse } from './../../courses/shared';
 export interface AppStore {
     userInfo: {};
     userToken: string;
-    /*courses: ICourse[];
-    selectedCourse: ICourse;*/
+    courses: ICourse[];
 }
 
 export const DEFAULT_VALUES = {
-    userInfo: null,
+    userInfo: {},
     userToken: '',
-    courses: [],
-    selectedCourse: null
+    courses: []
 };

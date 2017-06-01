@@ -8,10 +8,12 @@ import {
 
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/Rx';
+import { Store } from '@ngrx/store';
 
 import { ICourse, CourseService } from '../shared';
 import { LoaderBlockService } from '../../core/services';
 import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
+import { AppStore } from './../../core/store/app-store';
 
 @Component({
   selector: 'course-list',
@@ -31,9 +33,16 @@ export class CourseListComponent implements OnDestroy {
 
   constructor(private courseService: CourseService,
               private loaderBlockService: LoaderBlockService,
-              private changeDetectorRef: ChangeDetectorRef) {
+              private changeDetectorRef: ChangeDetectorRef,
+              private store: Store<AppStore>) {
     this.courseList = [];
     this.getCourseList(this.start, this.count, '');
+    this.courseListSubscriptionList = this.store.select('courses')
+      .subscribe((_courseList) => {
+        this.courseList = this.courseList.concat(_courseList);
+        this.loaderBlockService.hide();
+        this.changeDetectorRef.markForCheck();
+      });
   }
 
   public removeCourse(courseId: number): void {
@@ -69,12 +78,6 @@ export class CourseListComponent implements OnDestroy {
 
   private getCourseList(start, count, query) {
     this.loaderBlockService.show();
-    this.courseListSubscriptionList = this.courseService.getCourseList(start, count, query)
-      .subscribe((_courseList) => {
-        this.courseList = this.courseList.concat(_courseList);
-      }, null, () => {
-        this.loaderBlockService.hide();
-        this.changeDetectorRef.markForCheck();
-      });
+    this.courseService.getCourseList(start, count, query);
   }
 }

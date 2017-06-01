@@ -14,7 +14,8 @@ import { AuthorizationService } from './services';
 import { LoaderBlockService } from './services';
 import { BreadcrumbsService } from './services';
 import { userTokenReducer, userInfoReducer } from '../login-page';
-
+import { getCoursesReducer } from './../courses/shared/courses.reducer';
+import { DEFAULT_VALUES } from './store/app-store';
 
 @NgModule({
     declarations: [
@@ -40,11 +41,9 @@ import { userTokenReducer, userInfoReducer } from '../login-page';
         HttpModule,
         StoreModule.provideStore({
             userInfo: userInfoReducer,
-            userToken: userTokenReducer
-        }, {
-            userInfo: {},
-            userToken: ''
-        }),
+            userToken: userTokenReducer,
+            courses: getCoursesReducer
+        }, DEFAULT_VALUES),
         StoreDevtoolsModule
     ]
 })
